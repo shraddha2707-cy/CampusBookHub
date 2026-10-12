@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inquiries - CampusBookHub</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#122044;--teal:#079c9b;--line:#e4ebf1;--muted:#60708d;--soft:#f7fafc;--green:#e8f7f0}*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif}body{min-height:100vh;color:var(--navy);background:#fff}button,input{font:inherit}.topbar{height:68px;padding:0 28px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:10px;color:var(--navy);font-size:25px;font-weight:800;text-decoration:none}.brand i,.brand span{color:var(--teal)}.brand i{font-size:32px}.top-actions{display:flex;align-items:center;gap:22px}.notification{position:relative;color:#596a87;font-size:20px}.notification b{position:absolute;top:-8px;right:-10px;width:16px;height:16px;display:grid;place-items:center;border-radius:50%;background:var(--teal);color:#fff;font-size:9px}.divider{width:1px;height:34px;background:var(--line)}.account{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:700}.avatar{width:38px;height:38px;display:grid;place-items:center;border-radius:50%;background:#e9f8f7;color:var(--teal);font-size:19px}.page{max-width:1120px;margin:auto;padding:22px 0 30px}.breadcrumbs{display:flex;align-items:center;gap:14px;color:#687994;font-size:11px;margin-bottom:20px}.breadcrumbs a{color:var(--muted);text-decoration:none}.breadcrumbs i{font-size:9px;color:#8ca0b8}.breadcrumbs strong{color:var(--teal);font-weight:600}.heading{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:22px}.heading h1{font-size:23px;line-height:1.25}.heading p{margin-top:7px;color:var(--muted);font-size:11px}.back-button{padding:9px 14px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--navy);font-size:11px;font-weight:600;cursor:pointer}.back-button i{margin-right:7px;color:var(--muted)}.book-summary{display:flex;align-items:center;gap:12px;margin-top:-70px;margin-right:155px;margin-bottom:19px;justify-content:flex-end}.book-summary img,.book-cover-placeholder{width:48px;height:60px;object-fit:cover;border-radius:4px;background:#edf5f5;display:grid;place-items:center;color:var(--teal);font-size:18px}.book-summary strong{display:block;font-size:11px}.book-summary span{display:block;color:var(--muted);font-size:10px;margin-top:2px}.book-summary b{display:block;color:var(--teal);font-size:12px;margin-top:4px}.workspace{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(280px,1fr);gap:12px}.conversation,.inquiry-list{border:1px solid var(--line);border-radius:9px;overflow:hidden;background:#fff}.conversation-head{height:54px;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}.person{display:flex;align-items:center;gap:11px}.person-avatar,.inquiry-avatar{width:32px;height:32px;display:grid;place-items:center;border-radius:50%;font-size:11px;font-weight:600}.person-avatar{background:#ffe5ea;color:#ef5870}.person strong{font-size:11px}.person small{display:block;color:var(--muted);font-size:9px;margin-top:2px}.online{color:#12a86b;font-size:10px}.online:before{content:'';display:inline-block;width:5px;height:5px;margin-right:5px;border-radius:50%;background:#12a86b}.more{border:0;background:transparent;color:#56708f;cursor:pointer}.messages{height:420px;padding:10px 16px;display:flex;flex-direction:column;gap:18px;overflow:auto;background:#fff}.day{text-align:center;color:#6f8097;font-size:8px}.day span{padding:4px 10px;border-radius:10px;background:#f1f5f8}.bubble{max-width:58%;padding:10px 12px;border-radius:7px;background:#f2f5f8;color:var(--navy);font-size:10px;line-height:1.45}.bubble time{display:block;margin-top:5px;color:#71839a;font-size:8px}.bubble.sent{align-self:flex-end;background:var(--green)}.composer{display:flex;align-items:center;gap:8px;padding:9px 12px;border-top:1px solid var(--line)}.composer button{border:0;background:transparent;color:#72849b;font-size:17px;cursor:pointer}.composer input{flex:1;min-width:0;padding:8px 10px;border:1px solid var(--line);border-radius:5px;outline:0;font-size:10px}.composer input:focus{border-color:#8fd4d4}.send{padding:8px 14px!important;border-radius:5px!important;background:var(--teal)!important;color:#fff!important;font-size:10px!important}.inquiry-list{display:flex;flex-direction:column}.list-head{padding:15px 16px 11px;border-bottom:1px solid var(--line)}.list-head h2{font-size:14px}.search{display:flex;align-items:center;gap:8px;margin-top:12px;padding:8px 10px;border:1px solid var(--line);border-radius:5px;color:#71839a}.search i{font-size:11px}.search input{width:100%;border:0;outline:0;font-size:9px}.inquiries{flex:1}.inquiry{display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:9px;padding:12px 16px;border-bottom:1px solid var(--line);cursor:pointer}.inquiry.active{background:#eefaf8}.inquiry-avatar{grid-row:1 / span 2}.inquiry:nth-child(1) .inquiry-avatar{background:#ffe5ea;color:#ef5870}.inquiry:nth-child(2) .inquiry-avatar{background:#eee8ff;color:#7359e9}.inquiry:nth-child(3) .inquiry-avatar{background:#e0f5eb;color:#1b9b6a}.inquiry:nth-child(4) .inquiry-avatar{background:#fff1d9;color:#eb9412}.inquiry:nth-child(5) .inquiry-avatar{background:#e4f2fd;color:#3891c5}.inquiry strong{font-size:10px}.inquiry p{margin-top:4px;color:#627591;font-size:9px;line-height:1.35}.inquiry time{color:#70829a;font-size:8px}.badge{align-self:end;justify-self:end;min-width:15px;height:15px;padding:0 4px;display:grid;place-items:center;border-radius:50%;background:var(--teal);color:#fff;font-size:8px}.list-footer{margin-top:auto;padding:15px 16px;color:var(--teal);font-size:10px;font-weight:600}.list-footer i{margin-left:8px;font-size:9px}@media(max-width:850px){.topbar{padding:0 16px}.brand{font-size:19px}.brand i{font-size:25px}.account span:not(.avatar),.account>i,.notification,.divider{display:none}.page{padding:18px 14px}.heading{gap:12px}.heading h1{font-size:19px}.book-summary{margin:0 0 16px;justify-content:flex-start}.workspace{grid-template-columns:1fr}.conversation{order:2}.inquiry-list{order:1}.messages{height:350px}.bubble{max-width:78%}}
+</style>
+<style>
+.inquiry .inquiry-avatar.buyer-tone-0,.person-avatar.buyer-tone-0{background:#ffe5ea;color:#ef5870}
+.inquiry .inquiry-avatar.buyer-tone-1,.person-avatar.buyer-tone-1{background:#eee8ff;color:#7359e9}
+.inquiry .inquiry-avatar.buyer-tone-2,.person-avatar.buyer-tone-2{background:#e0f5eb;color:#1b9b6a}
+.inquiry .inquiry-avatar.buyer-tone-3,.person-avatar.buyer-tone-3{background:#fff1d9;color:#eb9412}
+.inquiry .inquiry-avatar.buyer-tone-4,.person-avatar.buyer-tone-4{background:#e4f2fd;color:#3891c5}
+.inquiry{grid-template-columns:32px minmax(0,1fr) auto}
+.inquiry-meta{display:flex;align-items:flex-end;flex-direction:column;justify-content:space-between;gap:5px}
+.purchase-request-indicator{color:var(--teal);font-size:12px}
+.chat-message-actions{position:relative;display:inline-flex;margin-left:4px;vertical-align:middle}.chat-message-menu-toggle{padding:0 3px;border:0;background:transparent;color:#60708d;font-size:10px;cursor:pointer}.chat-message-menu{position:absolute;top:100%;right:0;z-index:2;min-width:76px;padding:4px;border:1px solid var(--line);border-radius:5px;background:#fff;box-shadow:0 3px 10px rgba(18,32,68,.12)}.chat-message-menu[hidden]{display:none!important}.chat-message-delete{width:100%;padding:5px 8px;border:0;border-radius:3px;background:#fff;color:#b42318;text-align:left;font-size:10px;cursor:pointer}.chat-message-delete:hover{background:#fff1f0}.chat-message-delete:disabled{opacity:.6;cursor:wait}
+.delete-confirm-dialog{width:min(90vw,360px);margin:auto;padding:22px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--navy);box-shadow:0 12px 40px rgba(18,32,68,.22)}.delete-confirm-dialog::backdrop{background:rgba(18,32,68,.45)}.delete-confirm-dialog p{font-size:14px;font-weight:600}.delete-confirm-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:20px}.delete-confirm-actions button{padding:8px 14px;border:1px solid var(--line);border-radius:5px;background:#fff;color:var(--navy);font:inherit;font-size:12px;cursor:pointer}.delete-confirm-actions button[value="delete"]{border-color:#b42318;background:#b42318;color:#fff}
+</style>
+<script>(function(){var nativeFetch=window.fetch;window.fetch=function(url,options){options=options||{};var token=sessionStorage.getItem('campusBookHubSession');if(token)options.headers=Object.assign({},options.headers,{Authorization:'Bearer '+token});return nativeFetch(url,options);};})();</script>
+<style>
+.book-summary{min-height:60px}.book-summary-cover{width:48px;height:60px;display:block;object-fit:cover;border-radius:4px;background:#edf5f5;box-shadow:0 2px 7px rgba(18,32,68,.12)}.book-summary strong{color:var(--navy);line-height:1.25}.book-summary b{font-weight:700}
+html,body{width:100%;max-width:100%;height:100%;overflow:hidden;touch-action:none}
+.workspace{min-width:0}.conversation,.inquiry-list,.messages{min-width:0;overflow-x:hidden!important}
+.workspace{height:calc(100vh - 250px)}
+.conversation,.inquiry-list{height:100%;min-height:0;display:flex;flex-direction:column}
+.messages{flex:1;min-height:0;overflow-y:auto!important}
+.conversation{position:relative;padding-bottom:58px}
+.composer{position:absolute;left:0;right:0;bottom:0;z-index:2;display:flex;align-items:center;gap:8px;min-height:58px;background:#fff;flex-shrink:0}
+.composer>button:first-child{width:34px;height:34px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid var(--line);border-radius:5px;background:#fff;color:#60708d}
+.composer input{height:34px;min-width:0;flex:1;padding:8px 12px;border:1px solid var(--line);border-radius:5px;background:#fff}
+.composer .send{height:34px;min-width:72px;display:flex;align-items:center;justify-content:center;gap:5px;flex-shrink:0;padding:8px 14px!important;border-radius:5px!important;background:var(--teal)!important;color:#fff!important}
+.empty-conversation{margin:auto;color:var(--muted);font-size:10px;text-align:center}
+.messages{height:auto;min-height:560px;overflow:visible!important;overflow-y:visible!important;overflow-x:visible!important;scrollbar-width:none;scroll-behavior:auto}.messages::-webkit-scrollbar{display:none}.conversation{height:calc(100vh - 190px);min-height:650px;overflow:visible!important}.inquiry-list{height:calc(100vh - 190px);min-height:650px;overflow:visible!important}
+@media(max-width:850px){.messages{min-height:420px}.conversation,.inquiry-list{height:auto;min-height:0}}
+</style>
+</head>
+<body>
+<header class="topbar"><a class="brand" href="dashboard.html"><i class="fa-solid fa-book-open"></i>Campus<span>BookHub</span></a><div class="top-actions"><span class="notification"><i class="fa-regular fa-bell"></i><b>3</b></span><span class="divider"></span><span class="account"><span class="avatar"><i class="fa-regular fa-user"></i></span><span id="accountName">Loading...</span><i class="fa-solid fa-chevron-down"></i></span></div></header>
+<main class="page"><nav class="breadcrumbs"><a href="mylistings.html">My Selling Books</a><i class="fa-solid fa-chevron-right"></i><strong>Inquiries</strong><i class="fa-solid fa-chevron-right"></i><strong id="crumbTitle">Physics All in One</strong></nav><div class="heading"><div><h1 id="pageTitle">Inquiries - Physics All in One</h1><p>All messages and inquiries for this book.</p></div><button class="back-button" onclick="window.location.href='mylistings.html'"><i class="fa-solid fa-chevron-left"></i>Back to Listings</button></div><div class="book-summary"><span id="bookCover" class="book-cover-placeholder"><i class="fa-solid fa-book"></i></span><div><strong id="bookName">Physics All in One</strong><span id="bookAuthor">By 123</span><b id="bookPrice">₹453</b></div></div><section class="workspace"><section class="conversation"><header class="conversation-head"><div class="person"><span class="person-avatar">AR</span><div><strong>Aarav Rao</strong><small>Joined Aug 2025&nbsp; · &nbsp;12 Listings</small></div></div><span class="online">Online</span><button class="more" aria-label="More options"><i class="fa-solid fa-ellipsis-vertical"></i></button></header><div class="messages" id="messages"><div class="day"><span>Today</span></div><div class="bubble">Hi! Is this book still available?<time>10:30 AM</time></div><div class="bubble sent">Yes, it is available.<time>10:31 AM&nbsp; ✓✓</time></div><div class="bubble">Can you share more pictures of the inside pages?<time>10:32 AM</time></div><div class="bubble sent">Sure! Here are some pictures.<time>10:33 AM&nbsp; ✓✓</time></div><div class="bubble">Thanks! I'll take it.<time>10:34 AM</time></div><div class="bubble sent">Great! When can we meet?<time>10:35 AM&nbsp; ✓✓</time></div></div><form class="composer" id="composer"><input id="messageInput" placeholder="Type a message..." autocomplete="off"><button class="send" type="submit"><i class="fa-regular fa-paper-plane"></i> Send</button></form></section><aside class="inquiry-list"><header class="list-head"><h2>Inquiries (5)</h2><label class="search"><i class="fa-solid fa-magnifying-glass"></i><input id="inquirySearch" placeholder="Search inquiries..."></label></header><div class="inquiries" id="inquiries"><div class="inquiry active" data-search="aarav rao hi is this book still available"><span class="inquiry-avatar">AR</span><div><strong>Aarav Rao <em class="badge">1</em></strong><p>Hi! Is this book still available?</p></div><time>10:30 AM</time></div><div class="inquiry" data-search="pooja sharma can you share more pictures"><span class="inquiry-avatar">PS</span><div><strong>Pooja Sharma <em class="badge">2</em></strong><p>Can you share more pictures of the inside pages?</p></div><time>Yesterday</time></div><div class="inquiry" data-search="rohan kulkarni what's the final price"><span class="inquiry-avatar">RK</span><div><strong>Rohan Kulkarni</strong><p>What's the final price?</p></div><time>Yesterday</time></div><div class="inquiry" data-search="sneha nair deliver campus"><span class="inquiry-avatar">SN</span><div><strong>Sneha Nair</strong><p>Is it possible to deliver on campus?</p></div><time>Aug 21, 2026</time></div><div class="inquiry" data-search="devansh verma interested meet"><span class="inquiry-avatar">DV</span><div><strong>Devansh Verma</strong><p>I'm interested. Please let me know when we can meet.</p></div><time>Aug 20, 2026</time></div></div><footer class="list-footer">View All Messages <i class="fa-solid fa-chevron-right"></i></footer></aside></section></main>
+<dialog id="deleteMessageDialog" class="delete-confirm-dialog" aria-labelledby="deleteMessagePrompt"><form method="dialog"><p id="deleteMessagePrompt">Delete this message for everyone?</p><div class="delete-confirm-actions"><button value="cancel">Cancel</button><button value="delete">Delete</button></div></form></dialog>
+<dialog id="chatNoticeDialog" class="delete-confirm-dialog" aria-labelledby="chatNoticeText"><form method="dialog"><p id="chatNoticeText" role="alert"></p><div class="delete-confirm-actions"><button value="close">OK</button></div></form></dialog>
+<script>
+(function(){
+ var id=new URLSearchParams(window.location.search).get('id');
+ var listing;
+ var currentUser;
+ var conversationMessages=[];
+ var pendingPurchaseRequests=[];
+ var selectedBuyerId=null;
+ var messageSending=false;
+ function showChatNotice(text){var dialog=document.getElementById('chatNoticeDialog');document.getElementById('chatNoticeText').textContent=text;if(!dialog.open)dialog.showModal();}
+ function getBuyerId(item){return item.conversationBuyerId||(listing&&item.senderId!==listing.userId?item.senderId:null);}
+ window.addEventListener('pending-purchase-buyers-updated',function(event){pendingPurchaseRequests=event.detail.requests;renderInquiryRows(conversationMessages);});
+ function setText(selector,value){var element=document.querySelector(selector);if(value)element.textContent=value;}
+ function renderMessages(messages){var body=document.getElementById('messages');body.innerHTML='<div class="day"><span>Today</span></div>';if(!messages.length){body.innerHTML+='<p class="empty-conversation">No messages yet. Start the conversation below.</p>';}messages.forEach(function(item){var bubble=document.createElement('div');bubble.className='bubble '+(currentUser&&item.senderId===currentUser.id?'sent':'');var messageText=document.createElement('span');messageText.textContent=item.text;bubble.appendChild(messageText);if(currentUser&&item.senderId===currentUser.id){var actions=document.createElement('span');actions.className='chat-message-actions';var toggle=document.createElement('button');toggle.type='button';toggle.className='chat-message-menu-toggle';toggle.innerHTML='<i class="fa-solid fa-chevron-down" aria-hidden="true"></i>';toggle.setAttribute('aria-label','Message options');toggle.setAttribute('aria-expanded','false');var menu=document.createElement('span');menu.className='chat-message-menu';menu.hidden=true;var deleteButton=document.createElement('button');deleteButton.type='button';deleteButton.className='chat-message-delete';deleteButton.dataset.messageId=item.id;deleteButton.textContent='Delete';menu.appendChild(deleteButton);actions.append(toggle,menu);bubble.appendChild(actions);}var time=document.createElement('time');time.textContent=new Date(item.createdAt).toLocaleTimeString([], {hour:'numeric',minute:'2-digit'});bubble.appendChild(time);body.appendChild(bubble);});}
+ function renderInquiryRows(messages){var list=document.getElementById('inquiries');var buyersById=new Map();messages.forEach(function(item){var buyerId=getBuyerId(item);if(!buyerId)return;var buyer=buyersById.get(buyerId);if(!buyer){buyer={id:buyerId,name:item.conversationBuyerName||(item.senderId===buyerId?item.senderName:'Campus user'),text:item.text,createdAt:item.createdAt,purchaseRequested:false};buyersById.set(buyerId,buyer);}else if(new Date(item.createdAt)>new Date(buyer.createdAt)){buyer.text=item.text;buyer.createdAt=item.createdAt;}});pendingPurchaseRequests.forEach(function(request){var buyer=buyersById.get(request.buyerId);if(!buyer){buyer={id:request.buyerId,name:request.buyerName,text:'Wants to buy this book',createdAt:request.requestedAt,purchaseRequested:true};buyersById.set(request.buyerId,buyer);}else{buyer.purchaseRequested=true;}});var buyers=Array.from(buyersById.values()).sort(function(a,b){return Number(b.purchaseRequested)-Number(a.purchaseRequested)||new Date(b.createdAt)-new Date(a.createdAt);});if(!selectedBuyerId&&buyers.length)selectedBuyerId=buyers[0].id;list.innerHTML='';buyers.forEach(function(buyer){var initials=buyer.name.split(/\s+/).map(function(part){return part[0];}).join('').slice(0,2).toUpperCase();var row=document.createElement('div');row.className='inquiry'+(buyer.id===selectedBuyerId?' active':'');row.dataset.search=(buyer.name+' '+buyer.text).toLowerCase();row.innerHTML='<span class="inquiry-avatar">'+initials+'</span><div><strong></strong><p></p></div><span class="inquiry-meta">'+(buyer.purchaseRequested?'<i class="purchase-request-indicator fa-solid fa-bag-shopping" title="Requested to buy this book" aria-label="Requested to buy this book"></i>':'')+'<time></time></span>';row.querySelector('strong').textContent=buyer.name;row.querySelector('p').textContent=buyer.text;row.querySelector('time').textContent=new Date(buyer.createdAt).toLocaleDateString();row.addEventListener('click',function(){selectedBuyerId=buyer.id;renderInquiryRows(conversationMessages);renderMessages(conversationMessages.filter(function(item){return getBuyerId(item)===selectedBuyerId;}));});list.appendChild(row);if(buyer.id===selectedBuyerId){document.querySelector('.person strong').textContent=buyer.name;document.querySelector('.person small').textContent='Buyer';document.querySelector('.person-avatar').textContent=initials;}});document.querySelector('.list-head h2').textContent='Inquiries ('+buyers.length+')';}
+ function loadMessages(){if(!id)return;fetch('/api/conversations/'+encodeURIComponent(id)).then(function(response){if(!response.ok)throw new Error('Could not load conversation.');return response.json();}).then(function(result){conversationMessages=result.messages;renderInquiryRows(conversationMessages);renderMessages(conversationMessages.filter(function(item){return getBuyerId(item)===selectedBuyerId;}));}).catch(function(){});}
+ window.setInterval(loadMessages,5000);
+ fetch('/api/me').then(function(response){return response.ok?response.json():null;}).then(function(user){currentUser=user;if(user)setText('#accountName',user.fullName);loadMessages();});
+ if(id){fetch('/api/listings').then(function(response){if(!response.ok)throw new Error('Could not load listing.');return response.json();}).then(function(result){listing=(result.listings||[]).find(function(item){return item.id===id;});if(!listing){setText('#pageTitle','Listing not found');setText('#crumbTitle','Unavailable');return;}setText('#pageTitle','Inquiries - '+listing.title);setText('#crumbTitle',listing.title);setText('#bookName',listing.title);setText('#bookAuthor','By '+listing.author);setText('#bookPrice','₹'+listing.price);if(listing.photos&&listing.photos[0]){var cover=document.querySelector('#bookCover');var image=document.createElement('img');image.src=listing.photos[0];image.alt=listing.title+' cover';cover.replaceWith(image);image.className='book-summary-cover';}loadMessages();}).catch(function(){setText('#pageTitle','Could not load listing');});}
+ document.getElementById('inquirySearch').addEventListener('input',function(){var query=this.value.toLowerCase().trim();document.querySelectorAll('.inquiry').forEach(function(item){item.hidden=query&&!item.dataset.search.includes(query);});});
+ document.getElementById('composer').addEventListener('submit',function(event){event.preventDefault();var input=document.getElementById('messageInput');var text=input.value.trim();if(messageSending||!text||!id||!selectedBuyerId)return;messageSending=true;var button=event.target.querySelector('.send');button.disabled=true;input.disabled=true;fetch('/api/conversations/'+encodeURIComponent(id),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:text,buyerId:selectedBuyerId})}).then(function(response){return response.text().then(function(raw){var result;try{result=JSON.parse(raw);}catch(error){throw new Error(raw||'Could not send message.');}if(!response.ok)throw new Error(result.error||'Could not send message.');return result;});}).then(function(){input.value='';loadMessages();}).catch(function(error){showChatNotice(error.message);}).finally(function(){messageSending=false;button.disabled=false;input.disabled=false;});});
+ function confirmMessageDeletion(){var dialog=document.getElementById('deleteMessageDialog');return new Promise(function(resolve){dialog.addEventListener('close',function(){resolve(dialog.returnValue==='delete');},{once:true});dialog.showModal();});}
+ document.getElementById('messages').addEventListener('click',function(event){var toggle=event.target.closest('.chat-message-menu-toggle');if(toggle){var selectedMenu=toggle.parentElement.querySelector('.chat-message-menu');document.querySelectorAll('#messages .chat-message-menu').forEach(function(menu){if(menu!==selectedMenu)menu.hidden=true;});document.querySelectorAll('#messages .chat-message-menu-toggle').forEach(function(button){if(button!==toggle)button.setAttribute('aria-expanded','false');});selectedMenu.hidden=!selectedMenu.hidden;toggle.setAttribute('aria-expanded',String(!selectedMenu.hidden));return;}var button=event.target.closest('.chat-message-delete');if(!button||!id)return;button.disabled=true;confirmMessageDeletion().then(function(confirmed){if(!confirmed){button.disabled=false;return;}return fetch('/api/conversations/'+encodeURIComponent(id)+'?messageId='+encodeURIComponent(button.dataset.messageId),{method:'DELETE'}).then(function(response){return response.json().then(function(result){if(!response.ok)throw new Error(result.error||'Could not delete message.');return result;});}).then(function(){loadMessages();});}).catch(function(error){alert(error.message);button.disabled=false;});});
+ var lastAnnouncedBuyerId=null;
+ new MutationObserver(function(){if(selectedBuyerId&&selectedBuyerId!==lastAnnouncedBuyerId){lastAnnouncedBuyerId=selectedBuyerId;window.dispatchEvent(new CustomEvent('buyer-thread-selected',{detail:{buyerId:selectedBuyerId}}));}}).observe(document.getElementById('inquiries'),{childList:true});
+})();
+</script>
+<script>
+(function(){
+ var list=document.getElementById('inquiries');
+ if(!list)return;
+ function showEmptyState(){
+  if(!list.querySelector('.inquiry')&&!list.querySelector('.empty-conversation')){
+   list.innerHTML='<p class="empty-conversation">No buyers or chats yet.</p>';
+     document.getElementById('messages').innerHTML='<p class="empty-conversation">No chats yet. Start the conversation when a buyer contacts you.</p>';
+      document.querySelector('.person strong').textContent='No buyers yet';
+      document.querySelector('.person small').textContent='No conversation selected';
+      document.querySelector('.person-avatar').textContent='--';
+      document.querySelector('.online').textContent='No chats';
+  }
+ }
+ new MutationObserver(showEmptyState).observe(list,{childList:true});
+ showEmptyState();
+ function toneFor(name){var hash=0;for(var i=0;i<name.length;i++)hash=(hash*31+name.charCodeAt(i))|0;return Math.abs(hash)%5;}
+ function syncBuyerAvatarColors(){
+  list.querySelectorAll('.inquiry').forEach(function(row){
+   var name=row.querySelector('strong');
+   var avatar=row.querySelector('.inquiry-avatar');
+   if(name&&avatar)avatar.className='inquiry-avatar buyer-tone-'+toneFor(name.textContent.trim().toLowerCase());
+  });
+  var personName=document.querySelector('.person strong');
+  var personAvatar=document.querySelector('.person-avatar');
+  if(personName&&personAvatar&&personName.textContent.trim()!=='No buyers yet')personAvatar.className='person-avatar buyer-tone-'+toneFor(personName.textContent.trim().toLowerCase());
+ }
+ new MutationObserver(syncBuyerAvatarColors).observe(list,{childList:true,subtree:true,characterData:true});
+ new MutationObserver(syncBuyerAvatarColors).observe(document.querySelector('.person strong'),{childList:true,characterData:true});
+ syncBuyerAvatarColors();
+})();
+</script>
+<style>
+.workspace{height:calc(100vh - 250px)!important;min-height:0!important}
+.conversation,.inquiry-list{height:100%!important;min-height:0!important;overflow:hidden!important}
+.messages{height:auto!important;min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important;padding-bottom:8px}
+.composer{display:flex!important;visibility:visible!important;opacity:1!important}
+</style>
+<style>
+.purchase-requests{display:none;flex:0 0 auto;max-height:150px;overflow-y:auto;margin:10px 12px 0;padding:12px;border:1px solid #cce9e7;border-radius:7px;background:linear-gradient(110deg,#eaf9f8,#f4fbfa)}
+.purchase-requests.visible{display:block}
+.purchase-requests h2{display:flex;align-items:center;gap:8px;margin-bottom:8px;color:#087f7d;font-size:12px}
+.purchase-request-icon{width:24px;height:24px;display:grid;place-items:center;border-radius:50%;background:var(--teal);color:#fff;font-size:11px}
+.purchase-request-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px;border:1px solid #e3efee;border-radius:6px;background:rgba(255,255,255,.88)}
+.purchase-request-row strong{display:block;margin-bottom:3px;font-size:11px}
+.purchase-request-row p,.purchase-request-message{color:var(--muted);font-size:10px;line-height:1.5}
+.purchase-cancellation{display:flex;align-items:center;gap:10px;margin-top:8px;padding:10px;border:1px solid #f3d5b6;border-radius:6px;background:#fff8ef;color:#9a5415}
+.purchase-cancellation-icon{width:24px;height:24px;display:grid;place-items:center;flex:0 0 auto;border-radius:50%;background:#fff0dc;color:#d97706;font-size:11px}
+.purchase-cancellation strong{display:block;margin-bottom:3px;font-size:11px}
+.purchase-cancellation p{color:#80634a;font-size:10px;line-height:1.45}
+.confirm-sale{min-height:32px;flex:0 0 auto;padding:0 11px;border:0;border-radius:5px;background:var(--teal);color:#fff;font-size:10px;font-weight:700;cursor:pointer}
+.confirm-sale:disabled{cursor:default;opacity:.65}
+</style>
+<script>
+(function () {
+  var listingId = new URLSearchParams(window.location.search).get('id');
+  var conversation = document.querySelector('.conversation');
+  var composer = document.getElementById('composer');
+  if (!listingId || !conversation || !composer) return;
+
+  var panel = document.createElement('section');
+  panel.className = 'purchase-requests';
+  panel.innerHTML = '<h2><span class="purchase-request-icon"><i class="fa-solid fa-bag-shopping" aria-hidden="true"></i></span>Purchase Requests</h2><div class="purchase-request-items"></div>';
+  conversation.insertBefore(panel, composer);
+  var items = panel.querySelector('.purchase-request-items');
+  var requestTimer;
+  var activeBuyerId = null;
+
+  function parseResponse(response) {
+    return response.json().then(function (result) {
+      if (!response.ok) throw new Error(result.error || 'Could not load purchase requests.');
+      return result;
+    });
+  }
+
+  function renderRequests(result) {
+    items.replaceChildren();
+    if (result.status === 'Sold') {
+      window.clearInterval(requestTimer);
+      panel.classList.add('visible');
+      var soldMessage = document.createElement('p');
+      soldMessage.className = 'purchase-request-message';
+      soldMessage.textContent = 'Sale confirmed. This listing is now sold.';
+      items.appendChild(soldMessage);
+      return;
+    }
+
+    var requests = (result.requests || []).filter(function (request) {
+      return activeBuyerId && request.buyerId === activeBuyerId;
+    });
+    var cancellations = (result.cancellations || []).filter(function (request) {
+      return activeBuyerId && request.buyerId === activeBuyerId;
+    });
+    panel.classList.toggle('visible', requests.length > 0 || cancellations.length > 0);
+    requests.forEach(function (request) {
+      var row = document.createElement('div');
+      row.className = 'purchase-request-row';
+      var details = document.createElement('div');
+      var buyer = document.createElement('strong');
+      buyer.textContent = request.buyerName;
+      var price = document.createElement('p');
+      price.textContent = 'Wants to buy this book for ₹' + request.price;
+      details.append(buyer, price);
+
+      var confirmButton = document.createElement('button');
+      confirmButton.type = 'button';
+      confirmButton.className = 'confirm-sale';
+      confirmButton.textContent = 'Confirm Sale';
+      confirmButton.addEventListener('click', function () {
+        confirmButton.disabled = true;
+        confirmButton.textContent = 'Confirming...';
+        fetch('/api/purchase-requests/' + encodeURIComponent(request.id) + '/confirm', { method: 'POST' })
+          .then(parseResponse)
+          .then(function () {
+            window.clearInterval(requestTimer);
+            renderRequests({ status: 'Sold', requests: [] });
+          })
+          .catch(function (error) {
+            confirmButton.disabled = false;
+            confirmButton.textContent = 'Confirm Sale';
+            var errorMessage = document.createElement('p');
+            errorMessage.className = 'purchase-request-message';
+            errorMessage.textContent = error.message;
+            items.appendChild(errorMessage);
+          });
+      });
+
+      row.append(details, confirmButton);
+      items.appendChild(row);
+    });
+    cancellations.forEach(function (request) {
+      var notice = document.createElement('div');
+      notice.className = 'purchase-cancellation';
+      notice.innerHTML = '<span class="purchase-cancellation-icon"><i class="fa-solid fa-ban" aria-hidden="true"></i></span><div><strong></strong><p>The buyer no longer wants this book and cancelled the purchase request.</p></div>';
+      notice.querySelector('strong').textContent = request.buyerName + ' cancelled the request';
+      items.appendChild(notice);
+    });
+  }
+
+  function loadRequests() {
+    fetch('/api/listings/' + encodeURIComponent(listingId) + '/purchase-requests')
+      .then(parseResponse)
+      .then(function (result) {
+        window.dispatchEvent(new CustomEvent('pending-purchase-buyers-updated', {
+          detail: { requests: result.requests || [], cancellations: result.cancellations || [] }
+        }));
+        renderRequests(result);
+      })
+      .catch(function () {});
+  }
+
+  window.addEventListener('buyer-thread-selected', function (event) {
+    activeBuyerId = event.detail.buyerId;
+    loadRequests();
+  });
+  loadRequests();
+  requestTimer = window.setInterval(loadRequests, 5000);
+})();
+</script>
+<script>
+(function () {
+ var listingId = new URLSearchParams(window.location.search).get('id');
+ var activeBuyerId = null;
+ var state = { restrictedByMe: false, restrictedYou: false };
+ var button = document.querySelector('.conversation-head .more');
+ var form = document.getElementById('composer');
+ var notice = document.createElement('p');
+ if (!button || !form) return;
+ notice.setAttribute('role', 'status');
+ notice.setAttribute('aria-live', 'polite');
+ notice.style.cssText = 'padding:0 12px;color:#b42318;font-size:11px';
+ notice.hidden = true;
+ form.parentNode.insertBefore(notice, form);
+ button.title = 'Restrict this buyer';
+ button.setAttribute('aria-label', 'Restrict this buyer');
+ button.innerHTML = '<i class="fa-solid fa-user-slash" aria-hidden="true"></i>';
+
+ function render() {
+  var blocked = state.restrictedByMe || state.restrictedYou;
+  var input = document.getElementById('messageInput');
+  var sendButton = form.querySelector('.send');
+  button.hidden = !activeBuyerId;
+  button.disabled = state.restrictedYou && !state.restrictedByMe;
+  button.title = state.restrictedByMe ? 'Unrestrict this buyer' : 'Restrict this buyer';
+  button.setAttribute('aria-label', button.title);
+  if (input) input.disabled = blocked;
+  if (sendButton) sendButton.disabled = blocked;
+  notice.hidden = !blocked;
+  notice.textContent = state.restrictedByMe
+   ? 'You restricted this user. Neither of you can send messages to the other.'
+   : state.restrictedYou ? 'This user restricted you. You cannot send them messages.' : '';
+ }
+
+ function refresh() {
+  if (!activeBuyerId || !listingId) { render(); return; }
+  fetch('/api/conversations/' + encodeURIComponent(listingId) + '/restriction?buyerId=' + encodeURIComponent(activeBuyerId))
+   .then(function (response) {
+    if (!response.ok) throw new Error('Could not load restriction status.');
+    return response.json();
+   })
+   .then(function (result) {
+    state = result;
+    render();
+   })
+   .catch(function () {});
+ }
+
+ window.addEventListener('buyer-thread-selected', function (event) {
+  activeBuyerId = event.detail.buyerId;
+  state = { restrictedByMe: false, restrictedYou: false };
+  render();
+  refresh();
+ });
+
+ button.addEventListener('click', function () {
+  if (!activeBuyerId || state.restrictedYou && !state.restrictedByMe) return;
+  var shouldRestrict = !state.restrictedByMe;
+  if (shouldRestrict && !window.confirm('Restrict this user? Neither of you will be able to send messages to the other.')) return;
+  button.disabled = true;
+  fetch('/api/conversations/' + encodeURIComponent(listingId) + '/restriction', {
+   method: shouldRestrict ? 'POST' : 'DELETE',
+   headers: { 'Content-Type': 'application/json' },
+   body: JSON.stringify({ buyerId: activeBuyerId })
+  })
+   .then(function (response) {
+    return response.json().then(function (result) {
+     if (!response.ok) throw new Error(result.error || 'Could not update this restriction.');
+     return result;
+    });
+   })
+   .then(refresh)
+   .catch(function (error) { window.alert(error.message); })
+   .finally(render);
+ });
+
+ window.setInterval(refresh, 5000);
+})();
+</script>
+</body>
+</html>

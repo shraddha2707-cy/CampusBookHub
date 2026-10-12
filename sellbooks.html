@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="/settings.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sell Books - CampusBookHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --navy:#122044; --teal:#079c9b; --line:#e6edf2; --muted:#60708d; }
+        * { box-sizing:border-box; margin:0; padding:0; font-family:'Poppins',sans-serif; }
+        body { min-height:100vh; color:var(--navy); background:#fff; } button,input,select,textarea { font:inherit; }
+        .topbar { height:68px; padding:0 28px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line); }
+        .brand { display:flex; align-items:center; gap:10px; color:var(--navy); font-size:25px; font-weight:800; text-decoration:none; } .brand i,.brand span { color:var(--teal); } .brand i { font-size:32px; }
+        .top-actions { display:flex; align-items:center; gap:22px; } .account { display:flex; align-items:center; gap:11px; font-size:12px; font-weight:700; } .avatar { width:40px; height:40px; display:grid; place-items:center; border-radius:50%; background:#e9f8f7; color:var(--teal); font-size:22px; }
+        .shell { display:flex; min-height:calc(100vh - 68px); } aside { width:250px; padding:18px 15px; flex-shrink:0; border-right:1px solid var(--line); } .nav-list { display:grid; gap:8px; }
+        .nav-item { width:100%; padding:10px 14px; display:flex; align-items:center; gap:16px; border:0; border-radius:8px; background:transparent; color:var(--navy); text-align:left; text-decoration:none; cursor:pointer; font-size:15px; } .nav-item:hover { background:#f1f8f8; } .nav-item i { width:34px; height:34px; display:grid; place-items:center; border-radius:50%; background:#eef8f8; color:var(--teal); font-size:18px; }
+        .nav-item:nth-child(3) i { background:#fff1dc; color:#ff9d13; } .nav-item:nth-child(4) i { background:#eeebff; color:#6e58ed; } .nav-item:nth-child(5) i { background:#e9f8ed; color:#169b35; } .nav-item:nth-child(6) i { background:#fff0f1; color:#fa3131; } .nav-item:nth-child(8) i { background:#f0edff; color:#7259e9; } .nav-item:nth-child(9) i { background:#edf1f5; color:#60708d; }
+        .nav-item.active { background:var(--teal); color:#fff; } .nav-item.active i { background:transparent; color:#fff; } .nav-divider { height:1px; margin:16px 0 9px; background:var(--line); }
+        main { flex:1; min-width:0; padding:20px; } .page { max-width:1120px; margin:0 auto; } .heading { margin:2px 0 14px; } .heading h1 { font-size:25px; } .heading p { margin-top:5px; color:var(--muted); font-size:13px; }
+        .form-card { padding:20px; border:1px solid #edf1f4; border-radius:8px; box-shadow:0 3px 14px rgba(18,32,68,.045); } .form-card h2 { margin-bottom:15px; font-size:15px; } .heading { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; } .my-selling-books { width:38px; height:38px; display:grid; place-items:center; border:1px solid #c9e7e8; border-radius:50%; color:var(--teal); text-decoration:none; font-size:16px; } .my-selling-books:hover { background:#e9f8f7; }
+        .fields { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:16px 26px; } .field { min-width:0; } .field label { display:block; margin-bottom:6px; font-size:12px; font-weight:600; } .required { color:#e23a3a; } .optional { color:var(--muted); font-weight:400; }
+        .field input,.field select,.field textarea { width:100%; border:1px solid #dfe6ee; border-radius:6px; outline:0; color:var(--navy); font-size:12px; } .field input,.field select { height:36px; padding:0 11px; } .field textarea { min-height:73px; padding:10px 11px; resize:vertical; } .field input:focus,.field select:focus,.field textarea:focus { border-color:var(--teal); }
+        .title,.author { grid-column:span 3; } .category,.subject { grid-column:span 2; } .edition,.publisher,.condition,.price { grid-column:span 2; } .negotiable { grid-column:span 2; align-self:end; padding-bottom:8px; gap:6px; font-size:13px; font-weight:600; } .negotiable input { width:14px; height:14px; margin:0; } .description { grid-column:1/-1; } .description-box { position:relative; } .counter { position:absolute; right:11px; bottom:7px; color:var(--muted); font-size:9px; }
+        .photos { grid-column:1/-1; } .photos-title { margin-bottom:10px; font-size:12px; font-weight:600; } .photos-subtitle { display:block; margin-top:3px; color:var(--muted); font-weight:400; } .photo-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:22px; } .photo-slot { position:relative; min-height:91px; display:grid; place-items:center; align-content:center; gap:5px; border:1px dashed #cfd9e5; border-radius:7px; color:#5d6c86; text-align:center; font-size:11px; cursor:pointer; overflow:hidden; } .photo-slot:first-child { display:none; } .photo-slot i { color:var(--teal); font-size:20px; } .photo-slot:nth-child(n+2) i { color:#71819a; } .photo-slot span { display:block; font-size:10px; } .photo-slot img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; } .photo-slot.has-photo > i,.photo-slot.has-photo > strong,.photo-slot.has-photo > span { visibility:hidden; } .remove-photo { position:absolute; z-index:2; top:5px; right:5px; width:22px; height:22px; display:grid; place-items:center; border:0; border-radius:50%; background:rgba(18,32,68,.78); color:#fff; cursor:pointer; font-size:10px; }
+        .actions { grid-column:1/-1; display:flex; align-items:center; justify-content:space-between; margin-top:6px; } .preview,.post { min-height:34px; padding:0 15px; display:inline-flex; align-items:center; gap:8px; border-radius:5px; cursor:pointer; font-size:11px; font-weight:700; } .preview { border:1px solid var(--teal); background:#fff; color:var(--teal); } .post { border:0; background:var(--teal); color:#fff; } .post:hover { background:#057574; }
+        .camera-overlay { position:fixed; inset:0; z-index:20; display:none; flex-direction:column; background:#050505; color:#fff; } .camera-overlay.open { display:flex; } .camera-bar { height:64px; padding:0 24px; display:flex; align-items:center; justify-content:space-between; font-size:20px; } .camera-bar strong { font-size:18px; font-weight:500; } .camera-view { position:relative; flex:1; display:flex; align-items:center; justify-content:center; overflow:hidden; background:#111; } .camera-view video { width:100%; height:100%; object-fit:cover; } .camera-message { position:absolute; padding:12px 16px; border-radius:7px; background:rgba(0,0,0,.7); color:#fff; font-size:12px; text-align:center; } .camera-controls { min-height:150px; padding:20px 34px; display:flex; align-items:center; justify-content:space-between; } .camera-action { width:54px; height:54px; display:grid; place-items:center; border:0; border-radius:50%; background:#252525; color:#fff; cursor:pointer; font-size:21px; } .capture-camera { width:78px; height:78px; border:4px solid #fff; border-radius:50%; background:#fafafa; box-shadow:inset 0 0 0 3px #222; cursor:pointer; } .camera-overlay canvas { display:none; }
+        @media (min-width:761px) { .photo-slot:first-child { display:none; } .camera-overlay { display:none !important; } }
+        @media (max-width:760px) { .topbar { padding:0 16px; } .brand { font-size:20px; } .brand i { font-size:27px; } .account>span:not(.avatar),.account>i { display:none; } .shell { display:block; } aside { width:100%; padding:10px; border:0; overflow-x:auto; } .nav-list { display:flex; min-width:max-content; } .nav-item { width:auto; padding:7px 12px; } .nav-item i { width:30px; height:30px; } .nav-divider { display:none; } main { padding:12px; } .form-card { padding:15px; } .fields { grid-template-columns:1fr 1fr; gap:14px; } .title,.author,.description,.photos,.actions { grid-column:1/-1; } .category,.edition,.publisher,.condition,.price,.negotiable { grid-column:span 1; } .photo-grid { grid-template-columns:repeat(2,1fr); gap:10px; } .photo-slot:first-child { display:grid; } .photo-slot:last-child { display:none; } .actions { gap:10px; } }
+        @media (max-width:420px) { .fields { display:block; } .field { margin-bottom:14px; } .photo-grid { grid-template-columns:1fr 1fr; } .actions { align-items:stretch; flex-direction:column; } .preview,.post { justify-content:center; } }
+    </style>
+    <script>(function(){var nativeFetch=window.fetch;window.fetch=function(url,options){options=options||{};var token=sessionStorage.getItem('campusBookHubSession');if(token)options.headers=Object.assign({},options.headers,{Authorization:'Bearer '+token});return nativeFetch(url,options);};})();</script>
+</head>
+<body>
+    <header class="topbar"><a class="brand" href="dashboard.html"><i class="fa-solid fa-book-open"></i>Campus<span>BookHub</span></a><div class="top-actions"><span class="account"><span class="avatar"><i class="fa-regular fa-user"></i></span><span id="accountName">Loading...</span><i class="fa-solid fa-chevron-down"></i></span></div></header>
+    <div class="shell"><aside><nav class="nav-list"><a class="nav-item" href="dashboard.html"><i class="fa-regular fa-user"></i>Profile</a><a class="nav-item" href="buybooks.html"><i class="fa-solid fa-cart-shopping"></i>Buy Books</a><a class="nav-item active" href="sellbooks.html"><i class="fa-solid fa-tag"></i>Sell Books</a><a class="nav-item" href="uploadpdf.html"><i class="fa-regular fa-file-lines"></i>Upload PDF / Notes</a><span class="nav-divider"></span><button class="nav-item"><i class="fa-solid fa-gear"></i>Settings</button></nav></aside>
+        <main><section class="page"><div class="heading"><h1>Sell Books</h1><p>List your books and connect with students who need them.</p></div><form class="form-card" id="sellForm"><h2>Book Details</h2><div class="fields"><div class="field title"><label for="title">Book Title <span class="required">*</span></label><input id="title" required placeholder="Enter book title"></div><div class="field author"><label for="author">Author <span class="required">*</span></label><input id="author" required placeholder="Enter author name"></div><div class="field category"><label for="branch">Branch <span class="required">*</span></label><select id="branch" required><option value="">Select branch</option><option>Computer</option><option>Electronics and Telecommunication</option><option>Mechanical</option><option>Civil</option><option>Instrumentation</option><option>Automobile</option><option>First Year</option></select></div><div class="field subject"><label for="subject">Subject <span class="required">*</span></label><input id="subject" required maxlength="100" placeholder="Enter book subject"></div><div class="field edition"><label for="edition">Edition <span class="optional">(Optional)</span></label><input id="edition" placeholder="Enter edition"></div><div class="field publisher"><label for="publisher">Publisher <span class="optional">(Optional)</span></label><input id="publisher" placeholder="Enter publisher"></div><div class="field condition"><label for="condition">Condition <span class="required">*</span></label><select id="condition" required><option value="">Select condition</option><option>New</option><option>Old</option></select></div><div class="field price"><label for="price">Price (₹) <span class="required">*</span></label><input id="price" required type="number" min="0" placeholder="Enter price"></div><label class="check negotiable"><input type="checkbox"> Negotiable</label><div class="field description"><label for="description">Description <span class="required">*</span></label><div class="description-box"><textarea id="description" required maxlength="300" placeholder="Describe the book (highlights, usage, notes, etc.)"></textarea><span class="counter"><span id="descriptionCount">0</span>/300</span></div></div><div class="photos"><p class="photos-title">Add Photos <span class="required">*</span><span class="photos-subtitle">Add up to 5 images</span></p><div class="photo-grid"><label class="photo-slot"><i class="fa-solid fa-camera"></i><strong>Add Photo</strong><span>Use camera</span><input hidden type="file" accept="image/*" capture="environment"></label><label class="photo-slot"><i class="fa-solid fa-cloud-arrow-up"></i><strong>Upload Photo</strong><span>From device</span><input hidden type="file" accept="image/*"></label><label class="photo-slot"><i class="fa-solid fa-plus"></i><strong>Add Photo</strong><input hidden type="file" accept="image/*"></label><label class="photo-slot"><i class="fa-solid fa-plus"></i><strong>Add Photo</strong><input hidden type="file" accept="image/*"></label><label class="photo-slot"><i class="fa-solid fa-plus"></i><strong>Add Photo</strong><input hidden type="file" accept="image/*"></label></div></div><div class="actions"><button class="preview" type="button"><i class="fa-regular fa-eye"></i>Preview Listing</button><button class="post" type="submit"><i class="fa-solid fa-paper-plane"></i>Post Listing</button></div></div></form></section></main>
+    </div>
+    <div class="camera-overlay" id="cameraOverlay" aria-hidden="true"><div class="camera-bar"><button class="camera-action" id="closeCamera" type="button" aria-label="Close camera"><i class="fa-solid fa-xmark"></i></button><strong>PHOTO</strong><button class="camera-action" type="button" aria-label="Camera settings"><i class="fa-solid fa-gear"></i></button></div><div class="camera-view"><video id="cameraVideo" autoplay playsinline></video><p class="camera-message" id="cameraMessage">Allow camera access to take a photo</p></div><div class="camera-controls"><button class="camera-action" type="button" aria-label="Choose from gallery" id="galleryShortcut"><i class="fa-regular fa-image"></i></button><button class="capture-camera" type="button" aria-label="Take photo" id="captureCamera"></button><button class="camera-action" type="button" aria-label="Switch camera"><i class="fa-solid fa-camera-rotate"></i></button></div><canvas id="cameraCanvas"></canvas></div>
+    <script>
+        function apiFetch(url, options) { options = options || {}; options.headers = Object.assign({}, options.headers, { Authorization: 'Bearer ' + (sessionStorage.getItem('campusBookHubSession') || '') }); return fetch(url, options); }
+        var sellingBooksLink = document.createElement('a'); sellingBooksLink.className = 'my-selling-books'; sellingBooksLink.href = 'mylistings.html'; sellingBooksLink.title = 'Back to My Listings'; sellingBooksLink.setAttribute('aria-label', 'Back to My Listings'); sellingBooksLink.innerHTML = '<i class="fa-solid fa-arrow-left"></i>'; document.querySelector('.heading').appendChild(sellingBooksLink);
+        apiFetch('/api/me').then(async function (response) { if (!response.ok) { document.getElementById('accountName').textContent = 'Sign in to post'; return; } const user = await response.json(); document.getElementById('accountName').textContent = user.fullName; }).catch(function () { document.getElementById('accountName').textContent = 'Sign in to post'; });
+        document.getElementById('description').addEventListener('input', function (event) { document.getElementById('descriptionCount').textContent = event.target.value.length; });
+        var cameraOverlay = document.getElementById('cameraOverlay');
+        var cameraVideo = document.getElementById('cameraVideo');
+        var cameraStream;
+        var cameraSlot = document.querySelector('.photo-slot:first-child');
+        function closeCamera() { if (cameraStream) cameraStream.getTracks().forEach(function (track) { track.stop(); }); cameraStream = null; cameraVideo.srcObject = null; cameraOverlay.classList.remove('open'); cameraOverlay.setAttribute('aria-hidden', 'true'); }
+        function openCamera() {
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { alert('Camera access is not supported here. Please use Upload Photo.'); return; }
+            cameraOverlay.classList.add('open'); cameraOverlay.setAttribute('aria-hidden', 'false');
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' } }, audio: false }).then(function (stream) { cameraStream = stream; cameraVideo.srcObject = stream; document.getElementById('cameraMessage').style.display = 'none'; }).catch(function () { document.getElementById('cameraMessage').textContent = 'Camera access was blocked. Please allow access or use Upload Photo.'; });
+        }
+        function showPhotoInSlot(dataUrl) { var oldPreview = cameraSlot.querySelector('img'); var oldRemove = cameraSlot.querySelector('.remove-photo'); if (oldPreview) oldPreview.remove(); if (oldRemove) oldRemove.remove(); var preview = document.createElement('img'); preview.src = dataUrl; preview.alt = 'Captured book photo'; var removeButton = document.createElement('button'); removeButton.type = 'button'; removeButton.className = 'remove-photo'; removeButton.title = 'Remove photo'; removeButton.setAttribute('aria-label', 'Remove photo'); removeButton.innerHTML = '<i class="fa-solid fa-xmark"></i>'; removeButton.addEventListener('click', function (removeEvent) { removeEvent.preventDefault(); removeEvent.stopPropagation(); preview.remove(); removeButton.remove(); cameraSlot.querySelector('input').value = ''; cameraSlot.classList.remove('has-photo'); }); cameraSlot.insertBefore(preview, cameraSlot.querySelector('input')); cameraSlot.insertBefore(removeButton, cameraSlot.querySelector('input')); cameraSlot.classList.add('has-photo'); closeCamera(); }
+        cameraSlot.addEventListener('click', function (event) { if (event.target.closest('button, input')) return; event.preventDefault(); event.stopPropagation(); openCamera(); });
+        cameraSlot.querySelector('input').addEventListener('click', function (event) { event.preventDefault(); event.stopPropagation(); openCamera(); });
+        document.getElementById('closeCamera').addEventListener('click', closeCamera);
+        document.getElementById('captureCamera').addEventListener('click', function () { var canvas = document.getElementById('cameraCanvas'); canvas.width = cameraVideo.videoWidth; canvas.height = cameraVideo.videoHeight; canvas.getContext('2d').drawImage(cameraVideo, 0, 0); showPhotoInSlot(canvas.toDataURL('image/jpeg', .9)); });
+        document.getElementById('galleryShortcut').addEventListener('click', closeCamera);
+        document.querySelectorAll('.photo-slot input[type="file"]').forEach(function (input) {
+            input.addEventListener('change', function (event) {
+                var file = event.target.files[0];
+                var slot = event.target.closest('.photo-slot');
+                if (!file) return;
+                if (!file.type.startsWith('image/')) { alert('Please choose an image file.'); event.target.value = ''; return; }
+                var reader = new FileReader();
+                reader.onload = function () {
+                    var oldPreview = slot.querySelector('img');
+                    if (oldPreview) oldPreview.remove();
+                    var preview = document.createElement('img');
+                    preview.src = reader.result;
+                    preview.alt = 'Selected book photo';
+                    var removeButton = document.createElement('button');
+                    removeButton.type = 'button';
+                    removeButton.className = 'remove-photo';
+                    removeButton.title = 'Remove photo';
+                    removeButton.setAttribute('aria-label', 'Remove photo');
+                    removeButton.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+                    removeButton.addEventListener('click', function (removeEvent) {
+                        removeEvent.preventDefault();
+                        removeEvent.stopPropagation();
+                        preview.remove();
+                        removeButton.remove();
+                        input.value = '';
+                        slot.classList.remove('has-photo');
+                    });
+                    slot.insertBefore(preview, input);
+                    slot.insertBefore(removeButton, input);
+                    slot.classList.add('has-photo');
+                };
+                reader.readAsDataURL(file);
+            });
+        });
+        document.getElementById('sellForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+            var form = event.target;
+            if (!form.reportValidity()) return;
+            var photos = Array.from(document.querySelectorAll('.photo-slot img')).map(function (image) { return image.src; });
+            if (photos.length === 0) { alert('Please add at least one book photo.'); return; }
+            var payload = { title: document.getElementById('title').value, author: document.getElementById('author').value, branch: document.getElementById('branch').value, subject: document.getElementById('subject').value, edition: document.getElementById('edition').value, publisher: document.getElementById('publisher').value, condition: document.getElementById('condition').value, price: document.getElementById('price').value, negotiable: document.querySelector('.negotiable input').checked, description: document.getElementById('description').value, photos: photos };
+            var postButton = form.querySelector('.post');
+            postButton.disabled = true;
+            postButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Posting...';
+            try {
+                var response = await apiFetch('/api/listings', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                var responseText = await response.text();
+                var result;
+                try { result = JSON.parse(responseText); } catch { result = { error: responseText || 'Could not post the listing.' }; }
+                if (!response.ok) throw new Error(result.error || 'Could not post the listing.');
+                alert('Your book has been posted for sale.');
+                form.reset();
+                document.getElementById('descriptionCount').textContent = '0';
+                document.querySelectorAll('.photo-slot').forEach(function (slot) { slot.querySelectorAll('img,.remove-photo').forEach(function (element) { element.remove(); }); slot.classList.remove('has-photo'); });
+            } catch (error) { alert(error.message); } finally { postButton.disabled = false; postButton.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Post Listing'; }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+[
+  {
+    "id": "3c0bcd55-9031-45fe-a941-6e5bbc659f39",
+    "listingId": "bbbd473d-6539-4053-855f-334c6ec48dc9",
+    "senderId": "bf57fe19-e21c-45db-9056-d5ad0a71dedb",
+    "text": "hi",
+    "createdAt": "2026-10-05T06:13:05.707Z"
+  },
+  {
+    "id": "981c5363-56f3-42a6-afe9-5eb6cdae0ae2",
+    "listingId": "bbbd473d-6539-4053-855f-334c6ec48dc9",
+    "senderId": "b15db23b-d845-4e18-81f8-9b1d151920e8",
+    "text": "hi",
+    "createdAt": "2026-10-05T06:13:12.701Z"
+  },
+  {
+    "id": "e96244a6-e82b-4377-b68a-426c8ee89122",
+    "listingId": "bbbd473d-6539-4053-855f-334c6ec48dc9",
+    "senderId": "bf57fe19-e21c-45db-9056-d5ad0a71dedb",
+    "text": "i needed the book",
+    "createdAt": "2026-10-05T06:17:41.190Z"
+  },
+  {
+    "id": "a7e19f61-7d1a-4e17-b7b2-1cd493f5b688",
+    "listingId": "bbbd473d-6539-4053-855f-334c6ec48dc9",
+    "senderId": "b15db23b-d845-4e18-81f8-9b1d151920e8",
+    "text": "i wnat the bbook",
+    "createdAt": "2026-10-05T06:17:51.431Z"
+  },
+  {
+    "id": "edc28ca4-02dd-4da1-9aee-bcb04205d8c5",
+    "listingId": "56d7f9c8-7cab-45e4-9104-d8772a6e9802",
+    "conversationBuyerId": "5288f2c1-6e1f-465a-a958-1bee5c7304c3",
+    "senderId": "5288f2c1-6e1f-465a-a958-1bee5c7304c3",
+    "text": "hi",
+    "createdAt": "2026-10-06T07:15:58.570Z"
+  },
+  {
+    "id": "a8b16eb1-887d-45c0-a776-2281138a8195",
+    "listingId": "56d7f9c8-7cab-45e4-9104-d8772a6e9802",
+    "conversationBuyerId": "bf57fe19-e21c-45db-9056-d5ad0a71dedb",
+    "senderId": "bf57fe19-e21c-45db-9056-d5ad0a71dedb",
+    "text": "hello",
+    "createdAt": "2026-10-06T07:16:07.146Z"
+  },
+  {
+    "id": "8d96652a-c592-4c46-b20b-20ca06772be4",
+    "listingId": "56d7f9c8-7cab-45e4-9104-d8772a6e9802",
+    "conversationBuyerId": "5288f2c1-6e1f-465a-a958-1bee5c7304c3",
+    "senderId": "5288f2c1-6e1f-465a-a958-1bee5c7304c3",
+    "text": "fuck you",
+    "createdAt": "2026-10-06T07:16:20.180Z"
+  },
+  {
+    "id": "06a6545e-9687-482c-8d70-177810533646",
+    "listingId": "56d7f9c8-7cab-45e4-9104-d8772a6e9802",
+    "conversationBuyerId": "5288f2c1-6e1f-465a-a958-1bee5c7304c3",
+    "senderId": "b15db23b-d845-4e18-81f8-9b1d151920e8",
+    "type": "listing_sold",
+    "text": "This book has been sold to another buyer.",
+    "createdAt": "2026-10-06T11:03:33.587Z"
+  },
+  {
+    "id": "6f37876d-17d1-444c-a7c9-643f4f2fdde4",
+    "listingId": "e676ec79-20e2-4351-ac19-cfef38a01b14",
+    "conversationBuyerId": "b15db23b-d845-4e18-81f8-9b1d151920e8",
+    "senderId": "b15db23b-d845-4e18-81f8-9b1d151920e8",
+    "text": "hi",
+    "createdAt": "2026-10-07T17:45:30.651Z"
+  },
+  {
+    "id": "2139842a-f437-4aca-83ff-fa68c9ad3223",
+    "listingId": "e676ec79-20e2-4351-ac19-cfef38a01b14",
+    "conversationBuyerId": "5288f2c1-6e1f-465a-a958-1bee5c7304c3",
+    "senderId": "5288f2c1-6e1f-465a-a958-1bee5c7304c3",
+    "text": "hi",
+    "createdAt": "2026-10-07T17:45:39.848Z"
+  },
+  {
+    "id": "e5c9b2a6-f3d0-4ac2-88ff-26b1129a9fbb",
+    "listingId": "e676ec79-20e2-4351-ac19-cfef38a01b14",
+    "conversationBuyerId": "b15db23b-d845-4e18-81f8-9b1d151920e8",
+    "senderId": "b15db23b-d845-4e18-81f8-9b1d151920e8",
+    "text": "i hate you",
+    "createdAt": "2026-10-07T17:45:52.076Z"
+  },
+  {
+    "id": "751576e5-5c3e-4cb6-9d9c-c6ea286a9e0b",
+    "listingId": "e676ec79-20e2-4351-ac19-cfef38a01b14",
+    "conversationBuyerId": "b15db23b-d845-4e18-81f8-9b1d151920e8",
+    "senderId": "b15db23b-d845-4e18-81f8-9b1d151920e8",
+    "text": "i hate u",
+    "createdAt": "2026-10-07T18:19:50.851Z"
+  }
+]

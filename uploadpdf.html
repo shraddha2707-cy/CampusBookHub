@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="/settings.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upload PDF / Notes - CampusBookHub</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <style>
+    :root {
+      --navy: #122044;
+      --teal: #079c9b;
+      --teal-dark: #067d7b;
+      --bg: #edf5f5;
+      --panel: #eaf9f7;
+      --line: #dfeaf1;
+      --muted: #60708d;
+      --light: #d9f1ee;
+      --shadow: rgba(18, 32, 68, 0.06);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+    body {
+      height: 100vh;
+      overflow: hidden;
+      background: #fff;
+      color: var(--navy);
+    }
+
+    a, button, input, select, textarea { font: inherit; }
+
+    .topbar {
+      height: 68px;
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fff;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--navy);
+      font-size: 25px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .brand i { color: var(--teal); font-size: 32px; }
+    .brand span { color: var(--teal); }
+
+    .user-chip {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      border: 0;
+      background: transparent;
+      color: var(--navy);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .user-chip .avatar {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #e9f8f7;
+      color: var(--teal);
+      font-size: 22px;
+    }
+
+    .user-chip .chevron { font-size: 11px; color: #60708d; }
+
+    .shell {
+      display: flex;
+      min-height: calc(100vh - 68px);
+    }
+
+    aside {
+      width: 250px;
+      background: #fff;
+      border-right: 1px solid var(--line);
+      padding: 18px 15px;
+      flex-shrink: 0;
+    }
+
+    .nav-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .nav-item {
+      width: 100%;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--navy);
+      text-align: left;
+      text-decoration: none;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-item:hover { background: #f1f8f8; }
+    .nav-item i {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #eef8f8;
+      color: var(--teal);
+      font-size: 18px;
+    }
+
+    .nav-item:nth-child(2) i { background: #e4f6f5; color: #079c9b; }
+    .nav-item:nth-child(3) i { background: #fff1dc; color: #ff9d13; }
+    .nav-item:nth-child(4) i { background: #eeebff; color: #6e58ed; }
+    .nav-item:nth-child(6) i { background: #fff0f1; color: #fa3131; }
+    .nav-item:nth-child(7) i { background: #e9f8f7; color: #079c9b; }
+
+    .nav-item.active {
+      background: var(--teal);
+      color: #fff;
+      box-shadow: 0 6px 18px rgba(7, 156, 155, 0.15);
+    }
+
+    .nav-item.active i { background: transparent; color: white; }
+
+    .nav-divider {
+      height: 1px;
+      margin: 17px 0 9px;
+      background: var(--line);
+    }
+
+    main {
+      flex: 1;
+      min-width: 0;
+      padding: 20px;
+    }
+
+    .content {
+      max-width: 1180px;
+      margin: 0 auto;
+      height: calc(100vh - 108px);
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .hero {
+      background: rgba(204, 240, 241, 0.9);
+      padding: 10px 14px 10px 10px;
+      border-radius: 12px 12px 0 0;
+      border: 1px solid #d2ebee;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .hero-box {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .illustration {
+      width: 120px;
+      height: 90px;
+      position: relative;
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(150,228,215,0.4), rgba(0,0,0,0));
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    .pdf-icon {
+      width: 62px;
+      height: 72px;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #27b6b9, #0d7e8b);
+      position: relative;
+      transform: rotate(-3deg);
+      box-shadow: 0 12px 18px rgba(9, 101, 121, 0.18);
+    }
+
+    .pdf-icon::before {
+      content: 'PDF';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: 1px;
+    }
+
+    .pdf-icon::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 18px;
+      height: 18px;
+      background: #e3f0fa;
+      clip-path: polygon(0 0, 100% 0, 100% 100%);
+      border-top-right-radius: 10px;
+    }
+
+    .stack {
+      position: absolute;
+      right: 10px;
+      bottom: 6px;
+      width: 68px;
+      height: 22px;
+      border-radius: 10px;
+      background: #f4f0d6;
+      box-shadow: 0 6px 12px rgba(18,32,68,0.08);
+      transform: rotate(8deg);
+    }
+
+    .stack::before, .stack::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #efcc4d, #ecb73f);
+    }
+
+    .stack::after {
+      transform: translate(-10px, -6px) scale(0.9);
+      background: linear-gradient(90deg, #b9ee9a, #7dc160);
+      opacity: 0.9;
+    }
+
+    .cloud {
+      position: absolute;
+      right: 6px;
+      bottom: 10px;
+      width: 28px;
+      height: 18px;
+      background: #25c3c0;
+      border-radius: 18px 18px 10px 10px;
+      box-shadow: -14px 2px 0 0 #25c3c0, 10px 5px 0 0 #25c3c0;
+      opacity: 0.9;
+    }
+
+    .cloud::before {
+      content: '';
+      position: absolute;
+      width: 24px;
+      height: 20px;
+      background: #25c3c0;
+      border-radius: 50%;
+      left: 4px;
+      top: -8px;
+    }
+
+    .hero-copy {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .hero-copy h1 {
+      font-size: 1.95rem;
+      font-weight: 800;
+      line-height: 1.08;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+
+    .hero-copy p {
+      color: #44607d;
+      font-size: 0.78rem;
+      max-width: 600px;
+      line-height: 1.4;
+    }
+
+    .share-note {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 10px 0 0;
+      color: var(--teal);
+      width: 126px;
+      flex-shrink: 0;
+      font-size: 0.95rem;
+      font-weight: 600;
+      transform: rotate(-12deg);
+    }
+
+    .share-note .word {
+      display: block;
+      line-height: 1.2;
+      text-align: center;
+      font-style: italic;
+      color: var(--teal-dark);
+    }
+
+    .share-note i {
+      display: block;
+      margin-top: 6px;
+      font-size: 1.2rem;
+      color: var(--teal);
+    }
+
+    .upload-tabs {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      flex: 0 0 auto;
+      gap: 0;
+      border: 1px solid #dfeaf1;
+      border-bottom: 0;
+      border-radius: 12px 12px 0 0;
+      overflow: hidden;
+      background: rgba(255,255,255,0.24);
+    }
+
+    .upload-tab {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-height: 42px;
+      padding: 0 6px;
+      border: 0;
+      background: rgba(255,255,255,0.05);
+      color: #2f5674;
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-right: 1px solid #dfeaf1;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .upload-tab:last-child { border-right: 0; }
+
+    .upload-tab i {
+      font-size: 1rem;
+      color: var(--teal);
+    }
+
+    .upload-tab.active {
+      background: #dff6f5;
+      color: var(--teal-dark);
+      box-shadow: inset 0 -3px 0 var(--teal);
+    }
+
+    .upload-tab.active i { color: var(--teal-dark); }
+
+    .upload-panel {
+      display: grid;
+      grid-template-columns: 1.45fr 0.9fr;
+      gap: 10px;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid #dbe9ee;
+      border-top: 0;
+      border-radius: 0 0 12px 12px;
+      padding: 8px 10px 7px;
+      min-height: 0;
+      flex: none;
+    }
+
+    .dropzone {
+      position: relative;
+      border: 2px dashed #93d8d4;
+      border-radius: 16px;
+      height: auto;
+      aspect-ratio: 4 / 3;
+      min-height: 0;
+      align-self: start;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(227, 248, 247, 0.28);
+      overflow: hidden;
+    }
+
+    .dropzone.file-selected .upload-icon,
+    .dropzone.file-selected h2,
+    .dropzone.file-selected p,
+    .dropzone.file-selected .drop-note,
+    .dropzone.file-selected .pdf-preview span {
+      display: none;
+    }
+
+    .dropzone-inner {
+      text-align: center;
+      max-width: 380px;
+      padding: 10px 12px;
+    }
+
+    .pdf-preview {
+      display: none;
+      width: 320px;
+      margin: 0 auto 8px;
+      color: var(--teal-dark);
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .pdf-preview.visible { display: block; }
+
+    .pdf-preview canvas {
+      display: block;
+      width: 320px;
+      max-height: 420px;
+      margin: 0 auto 5px;
+      border: 1px solid #c7e7e5;
+      border-radius: 5px;
+      background: #fff;
+      box-shadow: 0 5px 12px rgba(18, 32, 68, 0.12);
+    }
+
+    .pdf-preview:hover canvas { border-color: var(--teal); }
+
+    .upload-icon {
+      width: 92px;
+      height: 92px;
+      margin: 0 auto 8px;
+      position: relative;
+      display: grid;
+      place-items: center;
+    }
+
+    .upload-icon .cloud-base {
+      width: 92px;
+      height: 54px;
+      border: 5px solid var(--teal);
+      border-radius: 50% 50% 45% 45%;
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: transparent;
+    }
+
+    .upload-icon .cloud-base::before,
+    .upload-icon .cloud-base::after {
+      content: '';
+      position: absolute;
+      border: 5px solid var(--teal);
+      border-radius: 50%;
+      background: transparent;
+    }
+
+    .upload-icon .cloud-base::before {
+      width: 42px;
+      height: 42px;
+      left: 11px;
+      top: -27px;
+    }
+
+    .upload-icon .cloud-base::after {
+      width: 42px;
+      height: 42px;
+      right: 11px;
+      top: -23px;
+    }
+
+    .upload-icon .arrow {
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-left: 12px solid transparent;
+      border-right: 12px solid transparent;
+      border-bottom: 23px solid var(--teal);
+      left: 50%;
+      top: 11px;
+      transform: translateX(-50%);
+    }
+
+    .upload-icon .arrow::after {
+      content: '';
+      position: absolute;
+      left: -5px;
+      top: 20px;
+      width: 10px;
+      height: 27px;
+      background: var(--teal);
+      border-radius: 8px;
+    }
+
+    .dropzone h2 {
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: var(--teal);
+      margin-bottom: 5px;
+    }
+
+    .dropzone p {
+      font-size: 0.82rem;
+      color: #3c5f75;
+      margin-bottom: 10px;
+    }
+
+    .divider-text {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 1rem;
+      margin: 8px 0 16px;
+      font-weight: 600;
+    }
+
+    .divider-text::before,
+    .divider-text::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(107, 148, 170, 0.6);
+      max-width: 120px;
+    }
+
+    .file-picker {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 0 18px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #1bb3b9, #06a1a4);
+      color: white;
+      border: 0;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 12px 18px rgba(13, 142, 146, 0.18);
+    }
+
+    .file-picker i { font-size: 1.15rem; }
+    .file-picker:hover { background: linear-gradient(180deg, #12a3aa, #058d8f); }
+
+    .file-input {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0;
+      width: 1px;
+      height: 1px;
+    }
+
+    .drop-note {
+      display: block;
+      margin-top: 15px;
+      color: var(--muted);
+      font-size: 0.76rem;
+      letter-spacing: 0.02em;
+    }
+
+    .drop-note.selected {
+      color: var(--teal-dark);
+      font-weight: 700;
+    }
+
+    .form-card {
+      background: rgba(255,255,255,0.4);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 10px 11px 8px;
+      min-width: 0;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .form-card h3 {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+      color: var(--navy);
+    }
+
+    .form-card h3 i {
+      color: var(--teal);
+      font-size: 0.95rem;
+    }
+
+    .field {
+      display: grid;
+      gap: 4px;
+      margin-bottom: 9px;
+    }
+
+    .field label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .required { color: #eb3f3f; }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      border: 1px solid #d9e4ec;
+      border-radius: 8px;
+      outline: none;
+      background: rgba(255,255,255,0.3);
+      color: var(--navy);
+      padding: 8px 10px;
+      font-size: 0.8rem;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: rgba(7,156,155,0.7);
+      box-shadow: 0 0 0 3px rgba(7,156,155,0.12);
+    }
+
+    .field textarea {
+      min-height: 68px;
+      resize: vertical;
+    }
+
+    .char-count {
+      text-align: right;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: -6px;
+      margin-bottom: 8px;
+    }
+
+    .tag-box {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      border: 1px solid #d9e4ec;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.3);
+      padding: 8px 10px;
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    .tag-box i { color: var(--teal); }
+
+    .tag-box input {
+      min-width: 0;
+      flex: 1;
+      border: 0;
+      border-radius: 0;
+      outline: 0;
+      padding: 0;
+      background: transparent;
+      color: var(--navy);
+      font-size: 0.78rem;
+      box-shadow: none;
+    }
+
+    .tag-box input::placeholder { color: var(--muted); opacity: 1; }
+    .tag-box input:focus { border: 0; box-shadow: none; }
+
+    .upload-btn {
+      width: 100%;
+      height: 44px;
+      border: 0;
+      border-radius: 9px;
+      background: linear-gradient(180deg, #1bb3b9, #06a1a4);
+      color: white;
+      font-size: 0.86rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 12px 18px rgba(13, 142, 146, 0.18);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .upload-btn:hover { background: linear-gradient(180deg, #12a3aa, #058d8f); }
+    .upload-btn:disabled { opacity: 0.7; cursor: wait; }
+
+    .status {
+      display: none;
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .status.success {
+      display: block;
+      background: #eafaf4;
+      color: #0e7a52;
+      border: 1px solid #bdeacf;
+    }
+
+    .status.error {
+      display: block;
+      background: #fff1f2;
+      color: #b83245;
+      border: 1px solid #f5c6cb;
+    }
+
+    @media (max-width: 980px) {
+      body { overflow: auto; }
+      .shell { display: block; }
+      aside { width: 100%; padding: 10px; border-right: 0; border-bottom: 1px solid var(--line); }
+      .nav-list { display: flex; gap: 6px; overflow-x: auto; }
+      .nav-item { width: auto; min-height: 0; padding: 7px 12px; gap: 10px; white-space: nowrap; font-size: 14px; }
+      .nav-item i { width: 34px; height: 34px; font-size: 18px; }
+      .upload-panel { grid-template-columns: 1fr; }
+      .content { height: auto; min-height: 0; }
+      .dropzone { aspect-ratio: 4 / 3; }
+    }
+
+    @media (max-height: 760px) and (min-width: 981px) {
+      .hero { padding-top: 8px; padding-bottom: 8px; }
+      .illustration { width: 102px; height: 76px; }
+      .pdf-icon { width: 54px; height: 64px; }
+      .upload-tab { min-height: 42px; }
+      .upload-panel { padding-top: 9px; padding-bottom: 8px; }
+      .dropzone-inner { padding-top: 10px; padding-bottom: 10px; }
+      .upload-icon { width: 94px; height: 94px; margin-bottom: 10px; transform: scale(.82); }
+      .dropzone h2 { margin-bottom: 4px; }
+      .dropzone p { margin-bottom: 10px; }
+      .drop-note { margin-top: 16px; }
+      .field textarea { min-height: 70px; }
+    }
+
+    @media (max-width: 640px) {
+      .topbar { padding: 0 16px; }
+      .brand { font-size: 20px; }
+      .brand i { font-size: 27px; }
+      main { padding: 14px 12px 20px; }
+      .hero {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 16px;
+      }
+      .hero-box { width: 100%; gap: 12px; }
+      .illustration { width: 82px; height: 68px; }
+      .pdf-icon { width: 46px; height: 56px; }
+      .pdf-icon::before { font-size: 15px; }
+      .hero-copy h1 { font-size: 1.65rem; }
+      .hero-copy p { font-size: .78rem; }
+      .share-note { align-self: flex-end; width: auto; transform: none; }
+      .form-card { padding: 10px; }
+      .upload-tab { min-height: 44px; gap: 5px; font-size: .72rem; }
+      .upload-tab i { font-size: 1rem; }
+      .upload-panel { padding: 10px; }
+      .dropzone { aspect-ratio: 4 / 3; }
+      .upload-icon { transform: scale(.72); margin-bottom: 0; }
+      .dropzone h2 { font-size: 1.45rem; }
+      .dropzone p { font-size: .9rem; margin-bottom: 12px; }
+      .file-picker { height: 46px; padding: 0 18px; font-size: .9rem; }
+      .drop-note { margin-top: 18px; font-size: .76rem; }
+      .user-chip > span:not(.avatar), .user-chip .chevron { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="dashboard.html"><i class="fa-solid fa-book-open"></i> Campus<span>BookHub</span></a>
+    <button class="user-chip" type="button" aria-label="Profile">
+      <span class="avatar"><i class="fa-regular fa-user"></i></span>
+      <span id="accountName">Loading...</span>
+      <i class="fa-solid fa-chevron-down chevron"></i>
+    </button>
+  </header>
+
+  <div class="shell">
+    <aside>
+      <nav class="nav-list">
+        <a class="nav-item" href="dashboard.html"><i class="fa-regular fa-user"></i>Profile</a>
+        <a class="nav-item" href="buybooks.html"><i class="fa-solid fa-cart-shopping"></i>Buy Books</a>
+        <a class="nav-item" href="mylistings.html"><i class="fa-solid fa-tag"></i>Sell Books</a>
+        <a class="nav-item active" href="uploadpdf.html"><i class="fa-regular fa-file-lines"></i>Upload PDF / Notes</a>
+        <span class="nav-divider"></span>
+        
+        <button class="nav-item"><i class="fa-solid fa-gear"></i>Settings</button>
+      </nav>
+    </aside>
+
+    <main>
+      <div class="content">
+        <nav class="upload-tabs" aria-label="Upload sections">
+            <a class="upload-tab" href="subjects.html">
+              <i class="fa-solid fa-book-open"></i>
+              <span>Subjects</span>
+            </a>
+          <a class="upload-tab active" href="uploadpdf.html" aria-current="page">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+            <span>Upload PDF</span>
+          </a>
+          <a class="upload-tab" href="myuploads.html">
+            <i class="fa-solid fa-user"></i>
+            <span>My Uploads</span>
+          </a>
+          <a class="upload-tab" href="whitelisted.html">
+            <i class="fa-solid fa-heart"></i>
+            <span>Whitelisted</span>
+          </a>
+        </nav>
+
+        <section class="upload-panel">
+          <div class="dropzone" id="dropzone">
+            <div class="dropzone-inner">
+              <a class="pdf-preview" id="pdfPreview" target="_blank" rel="noopener" aria-label="Open uploaded PDF">
+                <canvas id="pdfCanvas"></canvas>
+                <span>Click preview to open PDF</span>
+              </a>
+              <div class="upload-icon" aria-hidden="true">
+                <div class="cloud-base"></div>
+                <div class="arrow"></div>
+              </div>
+
+              <h2>Drag &amp; drop your file here</h2>
+              <p>or</p>
+
+              <label class="file-picker" for="fileInput">
+                <i class="fa-solid fa-paperclip"></i>
+                Choose File
+              </label>
+              <input class="file-input" id="fileInput" type="file" accept=".pdf,.doc,.docx,.txt,.ppt,.pptx" />
+
+              <span class="drop-note" id="dropNote">Supports PDF, DOC, DOCX, TXT | Max size: 10MB</span>
+            </div>
+          </div>
+
+          <div class="form-card">
+            <div>
+              <h3><i class="fa-regular fa-file-lines"></i> Add Information</h3>
+
+              <div class="field">
+                <label for="branch">Branch <span class="required">*</span></label>
+                <select id="branch" required>
+                  <option value="">Select branch</option>
+                  <option>Computer</option>
+                  <option>Electronics and Telecommunication</option>
+                  <option>Mechanical</option>
+                  <option>Civil</option>
+                  <option>Instrumentation</option>
+                  <option>Automobile</option>
+                  <option>First Year</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="year">Year <span class="required">*</span></label>
+                <select id="year" required>
+                  <option value="">Select year</option>
+                  <option>First Year</option>
+                  <option>Second Year</option>
+                  <option>Third Year</option>
+                  <option>Fourth Year</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="subject">Subject <span class="required">*</span></label>
+                <input id="subject" type="text" maxlength="100" placeholder="Enter subject name" required />
+              </div>
+
+              <div class="field">
+                <label for="isQuestionPaper">Is this a question paper? <span class="required">*</span></label>
+                <select id="isQuestionPaper" required>
+                  <option value="">Select yes or no</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="description">Description</label>
+                <textarea id="description" maxlength="500" placeholder="Add a short description about the file..."></textarea>
+                <div class="char-count"><span id="charCount">0</span>/500</div>
+              </div>
+
+              <div class="field">
+                <label for="tags">Tags (optional)</label>
+                <label class="tag-box" for="tags">
+                  <i class="fa-solid fa-tag"></i>
+                  <input id="tags" type="text" placeholder="e.g. Notes, PYQs, Reference, Semester 1" />
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <button class="upload-btn" id="uploadBtn" type="button">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                Upload
+              </button>
+              <div class="status" id="statusBox" role="status" aria-live="polite"></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function setStatus(message, type) {
+      const box = document.getElementById('statusBox');
+      box.textContent = message;
+      box.className = 'status ' + type;
+    }
+
+    document.getElementById('description').addEventListener('input', function() {
+      const count = this.value.length;
+      document.getElementById('charCount').textContent = count;
+    });
+
+    const fileInput = document.getElementById('fileInput');
+    const dropzone = document.getElementById('dropzone');
+    const pdfPreview = document.getElementById('pdfPreview');
+    const pdfCanvas = document.getElementById('pdfCanvas');
+    let selectedFile = null;
+    let previewUrl = null;
+
+    if (window.pdfjsLib) {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    }
+
+    function isPdf(file) {
+      return file && (file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf'));
+    }
+
+    function clearPdfPreview() {
+      pdfPreview.classList.remove('visible');
+      pdfPreview.removeAttribute('href');
+      const context = pdfCanvas.getContext('2d');
+      context.clearRect(0, 0, pdfCanvas.width, pdfCanvas.height);
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+        previewUrl = null;
+      }
+    }
+
+    async function renderPdfPreview(file) {
+      clearPdfPreview();
+      if (!isPdf(file) || !window.pdfjsLib) return;
+      previewUrl = URL.createObjectURL(file);
+      pdfPreview.href = previewUrl;
+      try {
+        const pdf = await pdfjsLib.getDocument({ url: previewUrl }).promise;
+        const page = await pdf.getPage(1);
+        const baseViewport = page.getViewport({ scale: 1 });
+        const scale = Math.min(320 / baseViewport.width, 420 / baseViewport.height);
+        const viewport = page.getViewport({ scale: scale });
+        pdfCanvas.width = viewport.width;
+        pdfCanvas.height = viewport.height;
+        await page.render({ canvasContext: pdfCanvas.getContext('2d'), viewport: viewport }).promise;
+        pdfPreview.classList.add('visible');
+      } catch {
+        clearPdfPreview();
+        setStatus('Could not preview this PDF, but it is ready to upload.', 'error');
+      }
+    }
+
+    function setSelectedFile(file) {
+      selectedFile = file;
+      dropzone.classList.add('file-selected');
+      document.getElementById('dropNote').textContent = 'Selected file: ' + file.name;
+      document.getElementById('dropNote').classList.add('selected');
+      renderPdfPreview(file);
+      setStatus('Selected file: ' + file.name, 'success');
+    }
+
+    fileInput.addEventListener('change', function() {
+      const file = this.files && this.files[0] ? this.files[0] : null;
+      if (file) setSelectedFile(file);
+    });
+
+    ['dragenter', 'dragover'].forEach((eventName) => {
+      dropzone.addEventListener(eventName, function(event) {
+        event.preventDefault();
+        dropzone.style.borderColor = '#1ab6b4';
+        dropzone.style.background = 'rgba(181, 236, 234, 0.25)';
+      });
+    });
+
+    ['dragleave', 'drop'].forEach((eventName) => {
+      dropzone.addEventListener(eventName, function(event) {
+        event.preventDefault();
+        dropzone.style.borderColor = '#93d8d4';
+        dropzone.style.background = 'rgba(227, 248, 247, 0.28)';
+      });
+    });
+
+    dropzone.addEventListener('drop', function(event) {
+      const file = event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0];
+      if (!file) return;
+      fileInput.files = event.dataTransfer.files;
+      setSelectedFile(file);
+    });
+
+    async function readFileAsDataUrl(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => reject(new Error('Could not read the selected file.'));
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function getCurrentUser() {
+      const response = await fetch('/api/me');
+      if (!response.ok) {
+        throw new Error('You need to log in before uploading files.');
+      }
+      return response.json();
+    }
+
+    document.getElementById('uploadBtn').addEventListener('click', async function () {
+      const branch = document.getElementById('branch').value.trim();
+      const year = document.getElementById('year').value.trim();
+      const subject = document.getElementById('subject').value.trim();
+      const questionPaperChoice = document.getElementById('isQuestionPaper').value;
+      const description = document.getElementById('description').value.trim();
+
+      if (!branch || !year || !subject || !questionPaperChoice) {
+        setStatus('Please select a branch and year, enter a subject, and choose whether this is a question paper.', 'error');
+        return;
+      }
+
+      if (!selectedFile) {
+        setStatus('Please choose a PDF or notes file first.', 'error');
+        return;
+      }
+
+      if (selectedFile.size > 10 * 1024 * 1024) {
+        setStatus('File is too large. Please upload a file under 10MB.', 'error');
+        return;
+      }
+
+      const btn = this;
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Uploading...';
+
+      try {
+        const user = await getCurrentUser();
+        const fileData = await readFileAsDataUrl(selectedFile);
+        const payload = {
+          branch,
+          year,
+          subject,
+          isQuestionPaper: questionPaperChoice === 'yes',
+          description,
+          tags: document.getElementById('tags').value.trim(),
+          fileName: selectedFile.name,
+          fileType: selectedFile.type || 'application/octet-stream',
+          size: selectedFile.size,
+          uploadedBy: user.fullName,
+          fileData
+        };
+
+        const response = await fetch('/api/uploads', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        let result = { error: 'Upload failed.' };
+        try {
+          result = await response.json();
+        } catch {
+          result = { error: 'Server returned HTTP ' + response.status + '.' };
+        }
+
+        if (!response.ok) {
+          throw new Error(result.error || 'Upload failed with HTTP ' + response.status + '.');
+        }
+
+        setStatus(questionPaperChoice === 'yes' ? 'Question paper uploaded and shared with the campus community.' : 'Notes uploaded and shared with the campus community.', 'success');
+        document.getElementById('branch').value = '';
+        document.getElementById('year').value = '';
+        document.getElementById('subject').value = '';
+        document.getElementById('isQuestionPaper').value = '';
+        document.getElementById('description').value = '';
+        document.getElementById('tags').value = '';
+        document.getElementById('charCount').textContent = '0';
+        document.getElementById('dropNote').textContent = 'Supports PDF, DOC, DOCX, TXT | Max size: 10MB';
+        document.getElementById('dropNote').classList.remove('selected');
+        dropzone.classList.remove('file-selected');
+        clearPdfPreview();
+        fileInput.value = '';
+        selectedFile = null;
+      } catch (error) {
+        setStatus(error.message || 'Upload failed. Check that the server is running and try again.', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Upload';
+      }
+    });
+
+    fetch('/api/me').then(async function(response) {
+      if (!response.ok) {
+        window.location.href = 'login.html';
+        return;
+      }
+      const user = await response.json();
+      document.getElementById('accountName').textContent = user.fullName;
+    }).catch(function() {
+      window.location.href = 'login.html';
+    });
+  </script>
+</body>
+</html>

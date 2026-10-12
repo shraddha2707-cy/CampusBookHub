@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="/settings.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Uploads - CampusBookHub</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #122044;
+      --teal: #079c9b;
+      --teal-soft: #edf9f9;
+      --line: #e7edf2;
+      --muted: #60708d;
+      --placeholder: #93a4b7;
+      --card-shadow: 0 8px 18px rgba(18, 32, 68, 0.05);
+      --danger: #f85151;
+      --success: #2bbd87;
+      --warning: #f7b93a;
+      --purple: #7c5ecb;
+      --blue: #2a7ff6;
+      --green: #33a77c;
+      --red: #eb5d50;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+    body { min-height: 100vh; background: #fff; color: var(--navy); }
+    a, button, input { font: inherit; }
+
+    .topbar {
+      height: 68px;
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--navy);
+      text-decoration: none;
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .brand i, .brand span { color: var(--teal); }
+    .brand i { font-size: 32px; }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .search {
+      width: 300px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 14px;
+      border: 1px solid #dde7ee;
+      border-radius: 12px;
+      background: #fff;
+      color: var(--placeholder);
+    }
+
+    .search i { font-size: 15px; }
+    .search input {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--navy);
+      font-size: 12px;
+    }
+    .search input::placeholder { color: #8e9ab0; }
+
+    .account {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--navy);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .avatar {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #e8f9f8;
+      color: var(--teal);
+      font-size: 18px;
+    }
+
+    .shell { display: flex; min-height: calc(100vh - 68px); }
+
+    aside {
+      width: 250px;
+      padding: 18px 15px;
+      border-right: 1px solid var(--line);
+      background: #fff;
+      flex-shrink: 0;
+    }
+
+    .nav-list { display: grid; gap: 8px; }
+
+    .nav-item {
+      width: 100%;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--navy);
+      text-align: left;
+      text-decoration: none;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .nav-item:hover { background: #f1f8f8; }
+    .nav-item i {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #eef8f8;
+      color: var(--teal);
+      font-size: 18px;
+    }
+
+    .nav-item:nth-child(2) i { background: #e4f6f5; color: #079c9b; }
+    .nav-item:nth-child(3) i { background: #fff1dc; color: #ff9d13; }
+    .nav-item:nth-child(4) i { background: #eeebff; color: #6e58ed; }
+    .nav-item:nth-child(6) i { background: #fff0f1; color: #fa3131; }
+    .nav-item:nth-child(7) i { background: #e9f8f7; color: #079c9b; }
+
+    .nav-item.active {
+      background: var(--teal);
+      color: #fff;
+      box-shadow: 0 6px 18px rgba(7, 156, 155, 0.15);
+    }
+    .nav-item.active i { background: transparent; color: white; }
+    .nav-divider { height: 1px; margin: 17px 0 9px; background: var(--line); }
+
+    main {
+      flex: 1;
+      min-width: 0;
+      padding: 20px;
+      background: #fff;
+    }
+
+    .content {
+      max-width: 1180px;
+      margin: 0 auto;
+      height: calc(100vh - 108px);
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .upload-tabs {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0;
+      border: 1px solid #dfeaf1;
+      border-bottom: 0;
+      border-radius: 12px 12px 0 0;
+      overflow: hidden;
+      background: rgba(255,255,255,0.24);
+    }
+
+    .upload-tab {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-height: 42px;
+      padding: 0 6px;
+      border: 0;
+      background: rgba(255,255,255,0.05);
+      color: #2f5674;
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-right: 1px solid #dfeaf1;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .upload-tab:last-child { border-right: 0; }
+    .upload-tab i { font-size: 1rem; color: var(--teal); }
+    .upload-tab.active {
+      background: #dff6f5;
+      color: var(--teal-dark);
+      box-shadow: inset 0 -3px 0 var(--teal);
+    }
+    .upload-tab.active i { color: var(--teal-dark); }
+
+    .page-panel {
+      border: 1px solid #ddeaf0;
+      border-top: 0;
+      border-radius: 0 0 12px 12px;
+      background: #fff;
+      min-height: 540px;
+      padding: 18px 18px 26px;
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 18px;
+    }
+
+    .search-panel {
+      width: 100%;
+      max-width: 320px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 14px;
+      border: 1px solid #dfe7ee;
+      border-radius: 10px;
+      background: #fff;
+      color: var(--placeholder);
+    }
+    .search-panel i { font-size: 15px; }
+    .search-panel input {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--navy);
+      font-size: 12px;
+    }
+    .search-panel input::placeholder { color: #93a4b7; }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 20px 26px;
+      align-items: stretch;
+    }
+
+    .file-card {
+      position: relative;
+      min-height: 240px;
+      padding: 16px 14px 12px;
+      border: 1px solid #e4ebf1;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .file-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .pdf-badge {
+      width: 52px;
+      height: 56px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.04em;
+      box-shadow: inset 0 -8px 18px rgba(0,0,0,0.08);
+    }
+
+    .pdf-badge.red { background: linear-gradient(180deg, #ff695f, #ef4f49); }
+    .pdf-badge.blue { background: linear-gradient(180deg, #4d86ff, #2a7ff6); }
+    .pdf-badge.green { background: linear-gradient(180deg, #2ebd8a, #27a57d); }
+    .pdf-badge.orange { background: linear-gradient(180deg, #ffa85a, #f38b3b); }
+    .pdf-badge.purple { background: linear-gradient(180deg, #b38ae8, #8e5ddc); }
+    .pdf-badge.mint { background: linear-gradient(180deg, #32d7cb, #0dbaa7); }
+
+    .menu-button {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      background: transparent;
+      color: #a0adbf;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    .menu-button:hover { background: #f4f8fb; border-color: #edf2f5; }
+    .menu-button.delete-upload:hover { color: var(--danger); }
+    .menu-button.delete-upload:disabled { cursor: wait; opacity: 0.5; }
+
+    .file-info {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .file-name {
+      font-size: 15px;
+      line-height: 1.4;
+      font-weight: 600;
+      color: var(--navy);
+      max-width: 100%;
+      word-break: break-word;
+    }
+
+    .meta-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+    .meta-row .upload-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #6d7b93;
+      font-size: 12px;
+    }
+
+    .file-size {
+      color: #6a7890;
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    .file-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .action-btn {
+      flex: 1;
+      min-height: 34px;
+      border-radius: 8px;
+      border: 1px solid #dfe9ef;
+      background: #fff;
+      color: var(--navy);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .action-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 12px rgba(18,32,68,0.06); }
+
+    .action-btn.primary {
+      background: #effcfb;
+      border-color: #d7f1f0;
+      color: var(--teal);
+    }
+    .action-btn.primary i { color: var(--teal); }
+
+    .action-btn.secondary {
+      background: linear-gradient(180deg, #eaf8f4, #edf9f7);
+      border-color: #d3f0ea;
+      color: var(--teal);
+    }
+    .action-btn.secondary i { color: var(--teal); }
+
+    .empty-state {
+      min-height: 300px;
+      display: none;
+      place-items: center;
+      text-align: center;
+      color: var(--navy);
+    }
+    .empty-state.visible { display: grid; }
+    .empty-art {
+      width: 180px;
+      height: 120px;
+      position: relative;
+      margin: 0 auto 18px;
+    }
+    .empty-cloud {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 18px;
+      height: 72px;
+      border-radius: 48% 52% 42% 45%;
+      background: #ecfaf8;
+    }
+    .empty-cloud::before, .empty-cloud::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      background: #ecfaf8;
+    }
+    .empty-cloud::before { width: 78px; height: 78px; left: 18px; top: -34px; }
+    .empty-cloud::after { width: 64px; height: 64px; right: 20px; top: -25px; }
+    .file-art {
+      position: absolute;
+      z-index: 1;
+      left: 63px;
+      top: 16px;
+      width: 52px;
+      height: 72px;
+      border-radius: 6px;
+      background: linear-gradient(145deg, #57c5bd, #3cb3ad);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+      box-shadow: 0 8px 12px rgba(18,32,68,0.08);
+    }
+    .file-art::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      border-left: 14px solid transparent;
+      border-bottom: 14px solid rgba(255,255,255,0.55);
+    }
+    .leaf {
+      position: absolute;
+      z-index: 2;
+      right: 30px;
+      bottom: 20px;
+      width: 16px;
+      height: 42px;
+      border-left: 3px solid #58ac7c;
+      transform: rotate(30deg);
+    }
+    .leaf::before, .leaf::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 11px;
+      border-radius: 100% 0;
+      background: #67bb83;
+    }
+    .leaf::before { left: -20px; top: 8px; transform: rotate(-20deg); }
+    .leaf::after { right: -17px; top: -8px; transform: rotate(20deg); }
+    .empty-state h2 { font-size: 19px; margin-bottom: 8px; }
+    .empty-state p { color: #7890b7; font-size: 13px; line-height: 1.7; }
+
+    @media (max-width: 980px) {
+      .shell { display: block; }
+      aside { width: 100%; padding: 10px; border-right: 0; border-bottom: 1px solid var(--line); }
+      .nav-list { display: flex; gap: 6px; overflow-x: auto; }
+      .nav-item { width: auto; padding: 8px 12px; white-space: nowrap; }
+      .nav-item i { width: 28px; height: 28px; }
+      .content { height: auto; min-height: 0; }
+      .cards-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 640px) {
+      .topbar { padding: 0 16px; }
+      .brand { font-size: 20px; }
+      .brand i { font-size: 27px; }
+      .search { display: none; }
+      main { padding: 12px; }
+      .upload-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .page-panel { padding: 12px; }
+      .toolbar { justify-content: stretch; }
+      .search-panel { max-width: none; }
+      .cards-grid { grid-template-columns: 1fr; }
+      .file-card { min-height: 210px; }
+      .file-name { font-size: 14px; }
+    }
+  </style>
+  <script>(function(){var nativeFetch=window.fetch;window.fetch=function(url,options){options=options||{};var token=sessionStorage.getItem('campusBookHubSession');if(token)options.headers=Object.assign({},options.headers,{Authorization:'Bearer '+token});return nativeFetch(url,options);};})();</script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="dashboard.html"><i class="fa-solid fa-book-open"></i> Campus<span>BookHub</span></a>
+    <div class="top-actions">
+      <label class="search"><i class="fa-solid fa-magnifying-glass"></i><input type="search" placeholder="Search books, notes, subjects..." /></label>
+      <span class="account"><span class="avatar"><i class="fa-regular fa-user"></i></span><span id="accountName">Loading...</span></span>
+    </div>
+  </header>
+
+  <div class="shell">
+    <aside>
+      <nav class="nav-list">
+        <a class="nav-item" href="dashboard.html"><i class="fa-regular fa-user"></i>Profile</a>
+        <a class="nav-item" href="buybooks.html"><i class="fa-solid fa-cart-shopping"></i>Buy Books</a>
+        <a class="nav-item" href="mylistings.html"><i class="fa-solid fa-tag"></i>Sell Books</a>
+        <a class="nav-item active" href="uploadpdf.html"><i class="fa-regular fa-file-lines"></i>Upload PDF / Notes</a>
+        <span class="nav-divider"></span>
+        
+        <button class="nav-item" type="button"><i class="fa-solid fa-gear"></i>Settings</button>
+      </nav>
+    </aside>
+
+    <main>
+      <div class="content">
+        <nav class="upload-tabs" aria-label="Upload sections">
+          <a class="upload-tab" href="subjects.html"><i class="fa-solid fa-book-open"></i><span>Subjects</span></a>
+          <a class="upload-tab" href="uploadpdf.html"><i class="fa-solid fa-cloud-arrow-up"></i><span>Upload PDF</span></a>
+          <a class="upload-tab active" href="myuploads.html"><i class="fa-solid fa-user"></i><span>My Uploads</span></a>
+          <a class="upload-tab" href="whitelisted.html"><i class="fa-solid fa-heart"></i><span>Whitelisted</span></a>
+        </nav>
+
+        <section class="page-panel" aria-labelledby="uploadsHeading">
+          <div class="toolbar">
+            <label class="search-panel" aria-label="Search your uploads">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input id="searchInput" type="search" placeholder="Search your uploads..." />
+            </label>
+          </div>
+
+          <div class="empty-state" id="emptyState">
+            <div>
+              <div class="empty-art">
+                <div class="empty-cloud"></div>
+                <div class="file-art"><i class="fa-solid fa-arrow-up"></i></div>
+                <div class="leaf"></div>
+              </div>
+              <h2>No uploads yet</h2>
+              <p>You haven't uploaded any PDFs or notes yet.<br />Share your notes, help others and make a difference!</p>
+            </div>
+          </div>
+
+          <div id="cardsGrid" class="cards-grid" aria-live="polite"></div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const palette = ['red', 'blue', 'green', 'orange', 'purple', 'mint'];
+    let allUploads = [];
+
+    function formatSize(bytes) {
+      if (!bytes) return '0 KB';
+      if (bytes < 1024 * 1024) return Math.round(bytes / 1024) + ' KB';
+      return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+    }
+
+    function formatDate(value) {
+      if (!value) return 'Recently uploaded';
+      const date = new Date(value);
+      return Number.isNaN(date.getTime()) ? 'Recently uploaded' : date.toLocaleDateString();
+    }
+
+    function escapeHtml(value) {
+      return String(value || '').replace(/[&<>"']/g, function(character) {
+        const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+        return map[character];
+      });
+    }
+
+    function getFileLabel(fileName) {
+      return (fileName || 'Document').split('.').slice(0, -1).join('.') || 'Document';
+    }
+
+    function getFileType(fileName, fileType) {
+      const name = String(fileName || '').toLowerCase();
+      if (fileType === 'application/pdf' || name.endsWith('.pdf')) return 'PDF';
+      if (name.endsWith('.doc') || name.endsWith('.docx')) return 'DOC';
+      if (name.endsWith('.ppt') || name.endsWith('.pptx')) return 'PPT';
+      if (name.endsWith('.txt')) return 'TXT';
+      return 'FILE';
+    }
+
+    function renderCards(items) {
+      const grid = document.getElementById('cardsGrid');
+      const emptyState = document.getElementById('emptyState');
+
+      if (!items.length) {
+        grid.innerHTML = '';
+        emptyState.classList.add('visible');
+        return;
+      }
+
+      emptyState.classList.remove('visible');
+      grid.innerHTML = items.map(function(upload, index) {
+        const badgeClass = palette[index % palette.length];
+        const label = getFileLabel(upload.fileName || upload.title || 'Document');
+        const viewUrl = '/api/uploads/' + encodeURIComponent(upload.id);
+        const safeTitle = escapeHtml(upload.title || label);
+        const safeFile = escapeHtml(upload.fileName || label);
+        return `
+          <article class="file-card">
+            <div class="file-top">
+              <div class="pdf-badge ${badgeClass}">${getFileType(upload.fileName, upload.fileType)}</div>
+              <button class="menu-button delete-upload" data-upload-id="${escapeHtml(upload.id)}" type="button" aria-label="Delete PDF" title="Delete PDF"><i class="fa-solid fa-trash"></i></button>
+            </div>
+
+            <div class="file-info">
+              <div class="file-name">${safeTitle}</div>
+              <div class="file-size">${formatSize(upload.size)}</div>
+              <div class="meta-row">
+                <span class="upload-icon"><i class="fa-regular fa-clock"></i></span>
+                <span>Uploaded on ${escapeHtml(formatDate(upload.createdAt))}</span>
+              </div>
+            </div>
+
+            <div class="file-actions">
+              <a class="action-btn primary" href="${viewUrl}" target="_blank" rel="noopener" aria-label="View uploaded document"><i class="fa-regular fa-eye"></i>View</a>
+              <a class="action-btn secondary" href="${viewUrl}?download=1" aria-label="Download uploaded document"><i class="fa-solid fa-download"></i></a>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function filterUploads(query) {
+      const text = query.trim().toLowerCase();
+      if (!text) return allUploads;
+      return allUploads.filter(function(upload) {
+        return [upload.title, upload.subject, upload.fileName, upload.description].some(function(value) {
+          return String(value || '').toLowerCase().includes(text);
+        });
+      });
+    }
+
+    function refreshUploads() {
+      return fetch('/api/uploads', { cache: 'no-store' })
+        .then(async function(response) {
+          if (!response.ok) throw new Error('Could not load uploads.');
+          const payload = await response.json();
+          allUploads = Array.isArray(payload.uploads) ? payload.uploads : [];
+          renderCards(filterUploads(document.getElementById('searchInput').value));
+        });
+    }
+
+    function initializePage() {
+      const searchInput = document.getElementById('searchInput');
+      searchInput.addEventListener('input', function(event) {
+        renderCards(filterUploads(event.target.value));
+      });
+
+      document.getElementById('cardsGrid').addEventListener('click', async function(event) {
+        const button = event.target.closest('.delete-upload');
+        if (!button || !window.confirm('Delete this PDF? This cannot be undone.')) return;
+
+        button.disabled = true;
+        try {
+          const response = await fetch('/api/uploads/' + encodeURIComponent(button.dataset.uploadId), { method: 'DELETE', cache: 'no-store' });
+          const result = await response.json();
+          if (!response.ok) throw new Error(result.error || 'Could not delete this PDF.');
+          await refreshUploads();
+        } catch (error) {
+          button.disabled = false;
+          window.alert(error.message || 'Could not delete this PDF.');
+        }
+      });
+
+      fetch('/api/me')
+        .then(async function(response) {
+          if (!response.ok) {
+            window.location.href = 'login.html';
+            return null;
+          }
+          const user = await response.json();
+          document.getElementById('accountName').textContent = user.fullName || 'Profile';
+          return refreshUploads();
+        })
+        .catch(function() {
+          window.location.href = 'login.html';
+        });
+    }
+
+    initializePage();
+    window.addEventListener('pageshow', function(event) {
+      if (event.persisted) refreshUploads().catch(function() {});
+    });
+    window.addEventListener('focus', function() {
+      refreshUploads().catch(function() {});
+    });
+  </script>
+</body>
+</html>

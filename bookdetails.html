@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="/settings.js" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Details - CampusBookHub</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#122044;--teal:#079c9b;--line:#e6edf2;--muted:#60708d;--green:#16a34a;--red:#ef4b4b}*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif}body{min-height:100vh;color:var(--navy);background:#fff}button,input,select,textarea{font:inherit}.topbar{height:68px;padding:0 28px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:10px;color:var(--navy);font-size:25px;font-weight:800;text-decoration:none}.brand i,.brand span{color:var(--teal)}.brand i{font-size:32px}.top-actions{display:flex;align-items:center;gap:22px}.notification{position:relative;color:#596a87;font-size:21px}.notification b{position:absolute;top:-9px;right:-10px;width:16px;height:16px;display:grid;place-items:center;border-radius:50%;background:var(--teal);color:#fff;font-size:9px}.divider{width:1px;height:34px;background:var(--line)}.account{display:flex;align-items:center;gap:11px;font-size:12px;font-weight:700}.avatar{width:40px;height:40px;display:grid;place-items:center;border-radius:50%;background:#e9f8f7;color:var(--teal);font-size:22px}.shell{display:flex;min-height:calc(100vh - 68px)}aside{width:250px;padding:18px 15px;border-right:1px solid var(--line);flex-shrink:0}.nav-list{display:grid;gap:8px}.nav-item{width:100%;padding:10px 14px;display:flex;align-items:center;gap:16px;border:0;border-radius:8px;background:transparent;color:var(--navy);text-align:left;text-decoration:none;cursor:pointer;font-size:14px}.nav-item:hover{background:#f1f8f8}.nav-item i{width:34px;height:34px;display:grid;place-items:center;border-radius:50%;background:#eef8f8;color:var(--teal);font-size:18px}.nav-item:nth-child(3) i{background:#fff1dc;color:#ff9d13}.nav-item:nth-child(4) i{background:#eeebff;color:#6e58ed}.nav-item:nth-child(5) i{background:#e9f8ed;color:#169b35}.nav-item:nth-child(6) i{background:#fff0f1;color:#fa3131}.nav-item:nth-child(8) i{background:#f0edff;color:#7259e9}.nav-item:nth-child(9) i{background:#edf1f5;color:#60708d}.nav-item.active{background:var(--teal);color:#fff}.nav-item.active i{background:transparent;color:#fff}.nav-divider{height:1px;margin:16px 0 9px;background:var(--line)}main{flex:1;min-width:0;padding:20px}.page{max-width:1120px;margin:auto}.breadcrumb{display:flex;align-items:center;gap:14px;margin:2px 0 13px;color:var(--muted);font-size:12px}.breadcrumb a{color:var(--teal);font-weight:600;text-decoration:none}.breadcrumb i{font-size:10px}.heading{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:14px}.heading h1{font-size:23px}.heading p{margin-top:5px;color:var(--muted);font-size:12px}.back-button,.secondary,.primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:36px;padding:0 15px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;cursor:pointer}.back-button,.secondary{border:1px solid #cbd8e5;background:#fff;color:var(--navy)}.primary{border:1px solid var(--teal);background:var(--teal);color:#fff}.primary:hover{background:#057574}.back-button:hover,.secondary:hover{background:#f5fbfb}.summary,.editor{border:1px solid #e7edf2;border-radius:8px;box-shadow:0 3px 14px rgba(18,32,68,.045)}.summary{display:grid;grid-template-columns:155px minmax(260px,1fr) 290px;gap:20px;padding:20px;margin-bottom:15px}.gallery{min-width:0}.hero-image{width:132px;height:182px;display:block;border:1px solid #e0e6ee;border-radius:6px;object-fit:cover;background:#f4f7fa}.thumbs{display:flex;gap:9px;margin-top:12px}.thumb{width:42px;height:42px;border:1px solid #dfe6ee;border-radius:5px;object-fit:cover;cursor:pointer}.thumb.selected{border:2px solid var(--teal)}.book-info h2{margin:3px 0 8px;font-size:17px}.book-info p{color:#4e5e7b;font-size:11px}.book-info p+p{margin-top:10px}.book-info strong{color:var(--teal)}.description{margin-top:22px!important;line-height:1.7}.badges{display:flex;gap:10px;margin-top:14px}.badge{padding:5px 10px;border-radius:5px;background:#e7f8ed;color:#159947;font-size:10px;font-weight:600}.badge.blue{background:#eaf0ff;color:#3c68d8}.facts{padding-left:20px;border-left:1px solid var(--line);display:grid;align-content:start;gap:15px}.fact{display:grid;grid-template-columns:20px 1fr auto;align-items:center;gap:8px;color:#4e5e7b;font-size:11px}.fact i{color:#71819a}.fact strong{color:var(--teal);font-size:11px}.fact .active{color:var(--green)}.editor{padding:16px}.editor-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}.editor h2{font-size:16px}.editor-actions{display:flex;gap:12px}.fields{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px 26px}.field{min-width:0}.field label{display:block;margin-bottom:6px;font-size:11px;font-weight:600}.field input,.field select,.field textarea{width:100%;border:1px solid #dfe6ee;border-radius:5px;outline:0;color:var(--navy);font-size:11px;background:#fff}.field input,.field select{height:36px;padding:0 10px}.field textarea{height:78px;padding:9px 10px;resize:vertical}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--teal)}.title,.author{grid-column:span 2}.category,.subcategory,.subject,.condition,.price{grid-column:span 2}.description-field{grid-column:span 4}.status-note{grid-column:span 2;align-self:end;color:var(--muted);font-size:10px}.message{padding:30px;text-align:center;color:var(--muted);font-size:13px}.hidden{display:none!important}@media(max-width:850px){aside{width:210px}.summary{grid-template-columns:135px 1fr}.facts{grid-column:1/-1;padding:15px 0 0;border-left:0;border-top:1px solid var(--line);grid-template-columns:repeat(2,1fr)}.description-field{grid-column:1/-1}}@media(max-width:650px){.topbar{padding:0 16px}.brand{font-size:20px}.brand i{font-size:27px}.account>span:not(.avatar),.account>i{display:none}.shell{display:block}aside{width:100%;padding:10px;border:0;overflow-x:auto}.nav-list{display:flex;min-width:max-content}.nav-item{width:auto;padding:7px 12px}.nav-item i{width:30px;height:30px}.nav-divider{display:none}main{padding:12px}.heading{align-items:stretch;flex-direction:column}.back-button{align-self:flex-start}.summary{display:block;padding:15px}.gallery{display:flex;gap:16px}.hero-image{width:110px;height:150px}.thumbs{margin-top:0;display:flex;flex-direction:column}.book-info{margin-top:16px}.facts{margin-top:16px;grid-template-columns:1fr 1fr}.fields{display:block}.field{margin-bottom:14px}.editor-head{align-items:stretch;flex-direction:column;gap:12px}.editor-actions{justify-content:flex-end}}
+.buyer-chat{display:none}.buyer-chat.visible{display:flex;flex-direction:column;min-height:430px;border:1px solid var(--line);border-radius:8px;background:#fff;box-shadow:0 3px 13px rgba(18,32,68,.045)}.chat-head{padding:16px 18px;border-bottom:1px solid var(--line)}.chat-head h2{font-size:16px}.chat-seller{display:flex;align-items:center;gap:9px;margin-top:8px;color:var(--muted);font-size:11px}.chat-seller i{width:30px;height:30px;display:grid;place-items:center;border-radius:50%;background:#e9f8f7;color:var(--teal);font-size:16px}.chat-seller strong{display:block;color:var(--navy);font-size:11px}.chat-seller span{color:var(--green);font-size:9px}.chat-body{flex:1;padding:16px;display:flex;flex-direction:column;gap:10px;background:#fbfcfd}.chat-date{align-self:center;color:var(--muted);font-size:9px}.chat-bubble{max-width:78%;padding:10px 12px;border-radius:8px;color:var(--navy);font-size:10px;line-height:1.45}.chat-bubble.incoming{align-self:flex-start;background:#f0f3f6}.chat-bubble.outgoing{align-self:flex-end;background:#e4f7f4}.chat-compose{display:flex;gap:8px;padding:10px;border-top:1px solid var(--line)}.chat-compose input{flex:1;min-width:0;padding:9px 11px;border:1px solid #dfe8ee;border-radius:6px;outline:0;font-size:10px}.chat-compose input:focus{border-color:var(--teal)}.chat-compose button{width:38px;border:0;border-radius:6px;background:var(--teal);color:#fff;cursor:pointer}.buyer-layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(300px,.75fr);gap:16px}.buyer-layout .summary{margin:0}.buyer-layout .buyer-chat{grid-column:2;grid-row:1}.hidden{display:none!important}@media (max-width:850px){.buyer-layout{display:block}.buyer-layout .buyer-chat{margin-top:16px}}
+.buyer-layout{width:100%;align-items:stretch}.buyer-layout .summary{min-width:0;overflow:hidden}.buyer-layout .summary .gallery,.buyer-layout .summary .book-info,.buyer-layout .summary .facts,.buyer-layout .summary .fact{min-width:0}.buyer-layout .summary .facts{overflow:hidden}.buyer-layout .summary .fact span,.buyer-layout .summary .fact strong{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.buyer-layout .buyer-chat{min-width:0;width:100%}
+.buyer-layout{grid-template-columns:minmax(0,2fr) minmax(290px,1fr);gap:20px}.buyer-layout .summary{display:grid;grid-template-columns:minmax(125px,155px) minmax(0,1fr) minmax(180px,240px);gap:18px;padding:20px;margin:0;min-height:536px}.buyer-layout .summary .facts{grid-column:auto;margin:0;padding-left:18px;border-left:1px solid var(--line);border-top:0;grid-template-columns:1fr}.buyer-layout .buyer-chat{height:536px;min-height:0;align-self:stretch}
+@media (max-width:850px){.buyer-layout{display:block}.buyer-layout .summary{display:block;min-height:0}.buyer-layout .summary .facts{margin-top:16px;padding:15px 0 0;border-left:0;border-top:1px solid var(--line);grid-template-columns:1fr 1fr}.buyer-layout .buyer-chat{height:auto;min-height:430px;margin-top:16px}}
+.buyer-layout .summary{grid-template-columns:180px minmax(0,1fr) 220px;min-height:380px;padding:20px 24px}.buyer-layout .summary .gallery{display:block}.buyer-layout .summary .hero-image{width:180px;height:264px;object-fit:cover;border-radius:6px}.buyer-layout .summary .thumbs{display:flex;gap:8px;margin-top:14px}.buyer-layout .summary .thumb{width:58px;height:66px;object-fit:cover;border-radius:5px}.buyer-layout .summary .book-info{padding-top:4px}.buyer-layout .summary .book-info h2{font-size:21px;line-height:1.25}.buyer-layout .summary .book-info .description{display:none}.buyer-layout .summary .facts{align-content:start;gap:16px}.buyer-layout .summary .facts:before{content:'Seller Information';display:block;grid-column:1/-1;padding-bottom:12px;border-bottom:1px solid var(--line);font-size:13px;font-weight:700}.buyer-seller{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:11px}.buyer-seller i{width:32px;height:32px;display:grid;place-items:center;border-radius:50%;background:#e9f8f7;color:var(--teal);font-size:16px}.buyer-seller strong{display:block}.buyer-seller span{color:var(--muted);font-size:9px}.buyer-about{grid-column:1/-1;padding-top:18px;border-top:1px solid var(--line)}.buyer-about h2{margin-bottom:9px;font-size:13px}.buyer-about p{max-width:680px;color:var(--muted);font-size:11px;line-height:1.7}.buyer-layout .buyer-chat{height:616px}.buyer-layout .chat-body{overflow:auto}
+@media (max-width:850px){.buyer-layout .summary{display:block;padding:16px}.buyer-layout .summary .hero-image{width:180px;height:264px}.buyer-layout .summary .facts{display:grid}.buyer-layout .summary .facts:before{margin-top:16px}.buyer-layout .buyer-chat{height:500px}}
+.buyer-mode-page{overflow:hidden}.buyer-layout .summary,.buyer-layout .buyer-chat{height:calc(100vh - 190px);min-height:0}.buyer-layout .chat-body{overflow:hidden}.buyer-layout .summary .book-info h2{font-size:23px}.buyer-layout .summary .book-info>p{font-size:13px}.buyer-layout .summary .badge{font-size:11px}.buyer-layout .summary .fact{font-size:13px}.buyer-layout .summary .fact strong{font-size:13px}.buyer-about h2{font-size:15px}.buyer-about p{font-size:12px}.chat-head h2{font-size:18px}.chat-seller,.chat-seller strong{font-size:12px}.chat-bubble{font-size:11px}.chat-compose input{font-size:11px}
+@media (max-width:850px){.buyer-mode-page{overflow:auto}.buyer-layout .summary,.buyer-layout .buyer-chat{height:auto}.buyer-layout .chat-body{overflow:auto}}
+.buyer-layout{align-items:start}.buyer-layout .summary{grid-column:1;grid-row:1;height:auto;min-height:380px}.buyer-layout .buyer-chat{grid-column:2;grid-row:1 / span 2;margin-top:0;height:calc(100vh - 190px)}.buyer-layout .buyer-about{grid-column:1;grid-row:2;margin-top:0;padding:24px;border:1px solid var(--line);border-radius:8px;background:#fff;box-shadow:0 3px 14px rgba(18,32,68,.045)}
+@media (max-width:850px){.buyer-layout .buyer-chat{height:500px}.buyer-layout .buyer-about{margin-top:16px;padding:16px}}
+.purchase-action{grid-column:1/-1;width:100%;min-height:42px;display:flex;align-items:center;justify-content:center;gap:9px;border:0;border-radius:6px;background:var(--teal);color:#fff;font-size:12px;font-weight:700;cursor:pointer}.purchase-action:hover{background:#057574}.purchase-action:focus-visible{outline:3px solid rgba(7,156,155,.25);outline-offset:2px}.purchase-action:disabled{cursor:default;opacity:.85}.purchase-action.completed{background:#e9f8ed;color:#168447}.purchase-status{grid-column:1/-1;min-height:16px;color:var(--muted);font-size:10px}
+.chat-message-actions{position:relative;display:inline-flex;margin-left:4px;vertical-align:middle}.chat-message-menu-toggle{padding:0 3px;border:0;background:transparent;color:#60708d;font-size:10px;cursor:pointer}.chat-message-menu{position:absolute;top:100%;right:0;z-index:2;min-width:76px;padding:4px;border:1px solid var(--line);border-radius:5px;background:#fff;box-shadow:0 3px 10px rgba(18,32,68,.12)}.chat-message-menu[hidden]{display:none!important}.chat-message-delete{width:100%;padding:5px 8px;border:0;border-radius:3px;background:#fff;color:#b42318;text-align:left;font-size:10px;cursor:pointer}.chat-message-delete:hover{background:#fff1f0}.chat-message-delete:disabled{opacity:.6;cursor:wait}
+.delete-confirm-dialog{width:min(90vw,360px);margin:auto;padding:22px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--navy);box-shadow:0 12px 40px rgba(18,32,68,.22)}.delete-confirm-dialog::backdrop{background:rgba(18,32,68,.45)}.delete-confirm-dialog p{font-size:14px;font-weight:600}.delete-confirm-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:20px}.delete-confirm-actions button{padding:8px 14px;border:1px solid var(--line);border-radius:5px;background:#fff;color:var(--navy);font:inherit;font-size:12px;cursor:pointer}.delete-confirm-actions button[value="delete"]{border-color:#b42318;background:#b42318;color:#fff}
+</style>
+<script>(function(){var nativeFetch=window.fetch;window.fetch=function(url,options){options=options||{};var token=sessionStorage.getItem('campusBookHubSession');if(token)options.headers=Object.assign({},options.headers,{Authorization:'Bearer '+token});return nativeFetch(url,options);};})();</script>
+</head>
+<body>
+<header class="topbar"><a class="brand" href="dashboard.html"><i class="fa-solid fa-book-open"></i>Campus<span>BookHub</span></a><div class="top-actions"><span class="notification"><i class="fa-regular fa-bell"></i><b>3</b></span><span class="divider"></span><span class="account"><span class="avatar"><i class="fa-regular fa-user"></i></span><span id="accountName">Loading...</span><i class="fa-solid fa-chevron-down"></i></span></div></header>
+<div class="shell"><aside><nav class="nav-list"><a class="nav-item" href="dashboard.html"><i class="fa-regular fa-user"></i>Profile</a><a class="nav-item" href="buybooks.html"><i class="fa-solid fa-cart-shopping"></i>Buy Books</a><a class="nav-item active" href="mylistings.html"><i class="fa-solid fa-tag"></i>Sell Books</a><button class="nav-item"><i class="fa-regular fa-file-lines"></i>Upload PDF / Notes</button><span class="nav-divider"></span><button class="nav-item"><i class="fa-solid fa-gear"></i>Settings</button></nav></aside>
+<main><section class="page"><div class="breadcrumb"><a href="mylistings.html">My Selling Books</a><i class="fa-solid fa-chevron-right"></i><span>Book Details</span></div><div class="heading"><div><h1>Book Details</h1><p>View and manage details of your book listing.</p></div><a class="back-button" href="mylistings.html"><i class="fa-solid fa-arrow-left"></i>Back to Listings</a></div><p id="message" class="message">Loading book details...</p><div id="content" class="hidden"><article class="summary"><div class="gallery"><img id="heroImage" class="hero-image" alt="Book cover"><div id="thumbs" class="thumbs"></div></div><div class="book-info"><h2 id="bookTitle"></h2><p>By <strong id="author"></strong></p><p>Branch: <span id="branch"></span></p><p>Subject: <span id="subject"></span></p><p id="summaryDescription" class="description"></p><div class="badges"><span id="conditionBadge" class="badge"></span><span id="formatBadge" class="badge blue">Paperback</span></div></div><div class="facts"><div class="fact"><i class="fa-solid fa-indian-rupee-sign"></i><span>Price</span><strong id="factPrice"></strong></div><div class="fact"><i class="fa-regular fa-circle-dot"></i><span>Status</span><strong id="factStatus" class="active"></strong></div><div class="fact"><i class="fa-regular fa-calendar-days"></i><span>Listed On</span><span id="factDate"></span></div><div class="fact"><i class="fa-regular fa-folder"></i><span>Category</span><span id="factCategory"></span></div><div class="fact"><i class="fa-solid fa-tag"></i><span>Sub Category</span><span id="factSubcategory"></span></div></div></article><form id="editForm" class="editor"><div class="editor-head"><h2>Edit Book Details</h2><div class="editor-actions"><a class="secondary" href="mylistings.html">Cancel</a><button class="primary" type="submit"><i class="fa-solid fa-check"></i>Save Changes</button></div></div><div class="fields"><div class="field title"><label for="title">Book Title <b>*</b></label><input id="title" required></div><div class="field author"><label for="authorInput">Author <b>*</b></label><input id="authorInput" required></div><div class="field category"><label for="branchInput">Category <b>*</b></label><input id="branchInput" required></div><div class="field subject"><label for="subjectInput">Subject <b>*</b></label><input id="subjectInput" maxlength="100" required></div><div class="field subcategory"><label for="subcategory">Sub Category</label><input id="subcategory"></div><div class="field description-field"><label for="description">Description <b>*</b></label><textarea id="description" maxlength="300" required></textarea></div><div class="field condition"><label for="condition">Condition <b>*</b></label><select id="condition" required><option>New</option><option>Old</option></select></div><div class="field price"><label for="price">Price (₹) <b>*</b></label><input id="price" type="number" min="0" required></div><p id="saveMessage" class="status-note"></p></div></form></div></section></main></div>
+<aside id="buyerChat" class="buyer-chat"><div class="chat-head"><h2>Chat with Seller</h2><div class="chat-seller"><i class="fa-regular fa-user"></i><div><strong id="sellerName">Campus seller</strong><span>Online</span></div></div></div><div id="chatBody" class="chat-body"><span class="chat-date">Today</span><div class="chat-bubble incoming">Hi! Is this book still available?</div></div><form id="chatForm" class="chat-compose"><input id="chatInput" placeholder="Type a message..." autocomplete="off" aria-label="Message to seller"><button type="submit" aria-label="Send message"><i class="fa-solid fa-paper-plane"></i></button></form></aside>
+<dialog id="deleteMessageDialog" class="delete-confirm-dialog" aria-labelledby="deleteMessagePrompt"><form method="dialog"><p id="deleteMessagePrompt">Delete this message for everyone?</p><div class="delete-confirm-actions"><button value="cancel">Cancel</button><button value="delete">Delete</button></div></form></dialog>
+<dialog id="chatNoticeDialog" class="delete-confirm-dialog" aria-labelledby="chatNoticeText"><form method="dialog"><p id="chatNoticeText" role="alert"></p><div class="delete-confirm-actions"><button value="close">OK</button></div></form></dialog>
+<script>
+var listing;
+var currentUser=null;
+var messageSending=false;
+var queryParams=new URLSearchParams(window.location.search);
+var listingId=queryParams.get('id');
+var buyerMode=queryParams.get('mode')==='buy';
+var message=document.getElementById('message');
+function showChatNotice(text){var dialog=document.getElementById('chatNoticeDialog');document.getElementById('chatNoticeText').textContent=text;if(!dialog.open)dialog.showModal();}
+if(buyerMode)document.body.classList.add('buyer-mode-page');
+if(buyerMode){document.querySelectorAll('.nav-item').forEach(function(item){item.classList.remove('active');});document.querySelectorAll('.nav-item')[1].classList.add('active');}
+function setText(id,value){var element=document.getElementById(id);if(element)element.textContent=value||'Not provided';}
+function displayDate(value){return value?new Date(value).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'Not provided';}
+function configureBuyerView(){if(!buyerMode)return;document.querySelector('.breadcrumb a').textContent='Buy Books';document.querySelector('.breadcrumb a').href='buybooks.html';document.querySelector('.heading h1').textContent='Book Details';document.querySelector('.heading p').textContent='Review this book before contacting the seller.';document.querySelector('.back-button').href='buybooks.html';document.querySelector('.back-button').innerHTML='<i class="fa-solid fa-arrow-left"></i>Back to Books';document.getElementById('editForm').classList.add('hidden');var content=document.getElementById('content');content.classList.add('buyer-layout');var summary=document.querySelector('.summary');var seller=document.createElement('div');seller.className='buyer-seller';seller.innerHTML='<i class="fa-regular fa-user"></i><div><strong id="buyerSellerName">Campus seller</strong><span>Student seller</span></div>';summary.querySelector('.facts').prepend(seller);var about=document.createElement('section');about.className='buyer-about';about.innerHTML='<h2>About the Book</h2><p id="buyerDescription"></p>';content.appendChild(about);content.appendChild(document.getElementById('buyerChat'));document.getElementById('buyerChat').classList.add('visible');}
+function showListing(item){listing=item;configureBuyerView();document.getElementById('content').classList.remove('hidden');message.classList.add('hidden');setText('bookTitle',item.title);setText('author',item.author);setText('branch',item.branch);setText('subject',item.subject);setText('summaryDescription',item.description);setText('buyerDescription',item.description);setText('conditionBadge',item.condition+' Condition');setText('factPrice','₹'+item.price);setText('factStatus',item.status||'Active');setText('factDate',displayDate(item.createdAt));setText('factCategory',item.branch);setText('factSubcategory',item.title);document.getElementById('title').value=item.title;document.getElementById('authorInput').value=item.author;document.getElementById('branchInput').value=item.branch;document.getElementById('subjectInput').value=item.subject||'';document.getElementById('subcategory').value=item.title;document.getElementById('description').value=item.description||'';document.getElementById('condition').value=item.condition;document.getElementById('price').value=item.price;var photos=item.photos||[];var hero=document.getElementById('heroImage');hero.src=photos[0]||'';var thumbs=document.getElementById('thumbs');thumbs.innerHTML='';photos.forEach(function(photo,index){var thumb=document.createElement('img');thumb.src=photo;thumb.className='thumb'+(index===0?' selected':'');thumb.alt='Book photo '+(index+1);thumb.addEventListener('click',function(){hero.src=photo;thumbs.querySelectorAll('.thumb').forEach(function(element){element.classList.remove('selected');});thumb.classList.add('selected');});thumbs.appendChild(thumb);});}
+fetch('/api/me').then(function(response){return response.ok?response.json():null;}).then(function(user){currentUser=user;if(user)setText('accountName',user.fullName);else setText('accountName','Sign in');loadBuyerMessages();}).catch(function(){setText('accountName','Sign in');});
+if(!listingId){message.textContent='This listing could not be found.';}else{var detailsEndpoint=buyerMode?'/api/marketplace/'+encodeURIComponent(listingId):'/api/listings';fetch(detailsEndpoint).then(function(response){if(!response.ok)throw new Error(buyerMode?'This book is no longer available.':'Could not load your listings.');return response.json();}).then(function(result){var item=buyerMode?result.listing:(result.listings||[]).find(function(candidate){return candidate.id===listingId;});if(!item)throw new Error('This listing could not be found.');if(buyerMode&&result.seller){setText('sellerName',result.seller.fullName);setText('buyerSellerName',result.seller.fullName);}showListing(item);loadBuyerMessages();}).catch(function(error){message.textContent=error.message;});}
+function renderBuyerMessages(messages){var body=document.getElementById('chatBody');body.innerHTML='<span class="chat-date">Today</span>';messages.forEach(function(item){var bubble=document.createElement('div');bubble.className='chat-bubble '+(item.senderId===listing.userId?'incoming':'outgoing');var messageText=document.createElement('span');messageText.textContent=item.text;bubble.appendChild(messageText);if(item.senderId===currentUser.id){var actions=document.createElement('span');actions.className='chat-message-actions';var toggle=document.createElement('button');toggle.type='button';toggle.className='chat-message-menu-toggle';toggle.innerHTML='<i class="fa-solid fa-chevron-down" aria-hidden="true"></i>';toggle.setAttribute('aria-label','Message options');toggle.setAttribute('aria-expanded','false');var menu=document.createElement('span');menu.className='chat-message-menu';menu.hidden=true;var deleteButton=document.createElement('button');deleteButton.type='button';deleteButton.className='chat-message-delete';deleteButton.dataset.messageId=item.id;deleteButton.textContent='Delete';menu.appendChild(deleteButton);actions.append(toggle,menu);bubble.appendChild(actions);}body.appendChild(bubble);});body.scrollTop=body.scrollHeight;}
+function loadBuyerMessages(){if(!buyerMode||!listing||!currentUser)return;fetch('/api/conversations/'+encodeURIComponent(listing.id)).then(function(response){if(!response.ok)throw new Error('Could not load conversation.');return response.json();}).then(function(result){var threadMessages=result.messages.filter(function(item){return item.conversationBuyerId===currentUser.id||(!item.conversationBuyerId&&item.senderId===currentUser.id);});renderBuyerMessages(threadMessages);}).catch(function(){});}
+function confirmMessageDeletion(){var dialog=document.getElementById('deleteMessageDialog');return new Promise(function(resolve){dialog.addEventListener('close',function(){resolve(dialog.returnValue==='delete');},{once:true});dialog.showModal();});}
+if(buyerMode)window.setInterval(loadBuyerMessages,5000);
+document.getElementById('chatBody').addEventListener('click',function(event){var toggle=event.target.closest('.chat-message-menu-toggle');if(toggle){var selectedMenu=toggle.parentElement.querySelector('.chat-message-menu');document.querySelectorAll('#chatBody .chat-message-menu').forEach(function(menu){if(menu!==selectedMenu)menu.hidden=true;});document.querySelectorAll('#chatBody .chat-message-menu-toggle').forEach(function(button){if(button!==toggle)button.setAttribute('aria-expanded','false');});selectedMenu.hidden=!selectedMenu.hidden;toggle.setAttribute('aria-expanded',String(!selectedMenu.hidden));return;}var button=event.target.closest('.chat-message-delete');if(!button||!listing)return;button.disabled=true;confirmMessageDeletion().then(function(confirmed){if(!confirmed){button.disabled=false;return;}return fetch('/api/conversations/'+encodeURIComponent(listing.id)+'?messageId='+encodeURIComponent(button.dataset.messageId),{method:'DELETE'}).then(function(response){return response.json().then(function(result){if(!response.ok)throw new Error(result.error||'Could not delete message.');return result;});}).then(function(){loadBuyerMessages();});}).catch(function(error){alert(error.message);button.disabled=false;});});
+document.getElementById('chatForm').addEventListener('submit',function(event){event.preventDefault();var input=document.getElementById('chatInput');var text=input.value.trim();if(messageSending||!text||!listing)return;messageSending=true;var button=event.target.querySelector('button');button.disabled=true;input.disabled=true;fetch('/api/conversations/'+encodeURIComponent(listing.id),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:text})}).then(function(response){return response.text().then(function(raw){var result;try{result=JSON.parse(raw);}catch(error){throw new Error(raw||'Could not send message.');}if(!response.ok)throw new Error(result.error||'Could not send message.');return result;});}).then(function(){input.value='';loadBuyerMessages();}).catch(function(error){showChatNotice(error.message);}).finally(function(){messageSending=false;button.disabled=false;input.disabled=false;});});
+document.getElementById('editForm').addEventListener('submit',function(event){event.preventDefault();if(!listing)return;var button=event.target.querySelector('button[type="submit"]');button.disabled=true;button.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i>Saving...';var payload={title:document.getElementById('title').value,author:document.getElementById('authorInput').value,branch:document.getElementById('branchInput').value,subject:document.getElementById('subjectInput').value,condition:document.getElementById('condition').value,price:document.getElementById('price').value,description:document.getElementById('description').value};fetch('/api/listings/'+encodeURIComponent(listing.id),{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).then(function(response){return response.json().then(function(result){if(!response.ok)throw new Error(result.error||'Could not save changes.');return result;});}).then(function(result){showListing(result.listing);document.getElementById('saveMessage').textContent='Changes saved.';}).catch(function(error){document.getElementById('saveMessage').textContent=error.message;}).finally(function(){button.disabled=false;button.innerHTML='<i class="fa-solid fa-check"></i>Save Changes';});});
+</script>
+<script>
+(function () {
+	var purchaseButton;
+	var purchaseStatus;
+	var purchaseStatusTimer;
+	var purchaseActionInProgress = false;
+	var buyerPurchaseStatus = 'None';
+
+	function parseResponse(response) {
+		return response.json().then(function (result) {
+			if (!response.ok) throw new Error(result.error || 'Could not update the purchase.');
+			return result;
+		});
+	}
+
+	function setPurchaseButton(label, iconClass) {
+		var icon = document.createElement('i');
+		icon.className = iconClass;
+		icon.setAttribute('aria-hidden', 'true');
+		purchaseButton.replaceChildren(icon, document.createTextNode(label));
+	}
+
+	function updateBuyerPurchaseStatus(status) {
+		buyerPurchaseStatus = status;
+		if (status === 'Completed') {
+			purchaseButton.textContent = 'Bought';
+			purchaseButton.classList.add('completed');
+			purchaseButton.disabled = true;
+			purchaseStatus.textContent = 'The seller confirmed this purchase.';
+			window.clearInterval(purchaseStatusTimer);
+			return;
+		}
+		if (status === 'Pending') {
+			setPurchaseButton('Cancel Request', 'fa-solid fa-circle-xmark');
+			purchaseButton.disabled = false;
+			purchaseButton.setAttribute('aria-label', 'Cancel purchase request');
+			purchaseButton.title = 'Cancel your purchase request';
+			purchaseStatus.textContent = 'Your request is waiting for the seller. Click to cancel.';
+			if (!purchaseStatusTimer) purchaseStatusTimer = window.setInterval(loadBuyerPurchaseStatus, 3000);
+			return;
+		}
+		if (status === 'Unavailable') {
+			purchaseButton.textContent = 'No Longer Available';
+			purchaseButton.disabled = true;
+			purchaseStatus.textContent = 'This book was confirmed for another buyer.';
+			window.clearInterval(purchaseStatusTimer);
+			return;
+		}
+		window.clearInterval(purchaseStatusTimer);
+		purchaseStatusTimer = null;
+		setPurchaseButton('Buy Book', 'fa-solid fa-cart-shopping');
+		purchaseButton.disabled = false;
+		purchaseButton.setAttribute('aria-label', 'Request to buy this book');
+		purchaseButton.title = '';
+		purchaseStatus.textContent = '';
+	}
+
+	function loadBuyerPurchaseStatus() {
+		if (!listing || purchaseActionInProgress) return;
+		fetch('/api/marketplace/' + encodeURIComponent(listing.id) + '/purchase-status')
+			.then(parseResponse)
+			.then(function (result) { updateBuyerPurchaseStatus(result.status); })
+			.catch(function () {});
+	}
+
+	function handlePurchaseAction() {
+		if (!listing || purchaseActionInProgress) return;
+		purchaseActionInProgress = true;
+		purchaseButton.disabled = true;
+		var cancelling = buyerPurchaseStatus === 'Pending';
+		setPurchaseButton(cancelling ? 'Cancelling Request...' : 'Sending Request...', 'fa-solid fa-spinner fa-spin');
+		purchaseStatus.textContent = '';
+		fetch('/api/marketplace/' + encodeURIComponent(listing.id) + '/purchase', { method: cancelling ? 'DELETE' : 'POST' })
+			.then(parseResponse)
+			.then(function (result) {
+				updateBuyerPurchaseStatus(result.purchase.status);
+				if (result.purchase.status === 'Cancelled') loadBuyerMessages();
+			})
+			.catch(function (error) {
+				purchaseStatus.textContent = error.message;
+			})
+			.finally(function () {
+				purchaseActionInProgress = false;
+				if (purchaseActionInProgress === false && buyerPurchaseStatus === 'Pending') {
+					setPurchaseButton('Cancel Request', 'fa-solid fa-circle-xmark');
+					purchaseButton.disabled = false;
+				}
+				loadBuyerPurchaseStatus();
+			});
+	}
+
+	if (buyerMode) {
+		purchaseButton = document.createElement('button');
+		purchaseButton.type = 'button';
+		purchaseButton.className = 'purchase-action';
+		var icon = document.createElement('i');
+		icon.className = 'fa-solid fa-cart-shopping';
+		icon.setAttribute('aria-hidden', 'true');
+		purchaseButton.append(icon, document.createTextNode('Buy Book'));
+		purchaseButton.setAttribute('aria-label', 'Request to buy this book');
+		purchaseButton.addEventListener('click', handlePurchaseAction);
+		purchaseStatus = document.createElement('p');
+		purchaseStatus.className = 'purchase-status';
+		purchaseStatus.setAttribute('role', 'status');
+		purchaseStatus.setAttribute('aria-live', 'polite');
+		var facts = document.querySelector('.facts');
+		facts.append(purchaseButton, purchaseStatus);
+	}
+
+	var listingWaitCount = 0;
+	var listingWaiter = window.setInterval(function () {
+		listingWaitCount += 1;
+		if (listing) {
+			window.clearInterval(listingWaiter);
+			if (buyerMode) loadBuyerPurchaseStatus();
+		} else if (listingWaitCount >= 120) {
+			window.clearInterval(listingWaiter);
+		}
+	}, 250);
+})();
+</script>
+<script>
+(function () {
+	var hero = document.getElementById('heroImage');
+	var viewer = document.createElement('div');
+	var image = document.createElement('img');
+	var closeButton = document.createElement('button');
+	var viewerStyle = document.createElement('style');
+
+	viewer.className = 'image-viewer';
+	viewer.hidden = true;
+	viewer.setAttribute('role', 'dialog');
+	viewer.setAttribute('aria-modal', 'true');
+	viewer.setAttribute('aria-label', 'Full-size book photo');
+	image.className = 'image-viewer-photo';
+	closeButton.className = 'image-viewer-close';
+	closeButton.type = 'button';
+	closeButton.setAttribute('aria-label', 'Close full-size photo');
+	closeButton.innerHTML = '<i class="fa-solid fa-xmark" aria-hidden="true"></i>';
+	viewer.append(closeButton, image);
+	document.body.appendChild(viewer);
+	viewerStyle.textContent = '.hero-image{cursor:zoom-in}.hero-image:focus-visible{outline:3px solid var(--teal);outline-offset:3px}.image-viewer[hidden]{display:none}.image-viewer{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:56px 24px 24px;background:rgba(8,15,32,.9);cursor:zoom-out}.image-viewer-photo{max-width:calc(100vw - 48px);max-height:calc(100vh - 80px);object-fit:contain;border-radius:6px;box-shadow:0 16px 48px rgba(0,0,0,.4);cursor:default}.image-viewer-close{position:absolute;top:14px;right:14px;width:44px;height:44px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.45);border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font-size:20px;cursor:pointer}.image-viewer-close:hover{background:rgba(255,255,255,.24)}body.image-viewer-open{overflow:hidden}';
+	document.head.appendChild(viewerStyle);
+	hero.setAttribute('role', 'button');
+	hero.setAttribute('tabindex', '0');
+	hero.setAttribute('aria-haspopup', 'dialog');
+	hero.setAttribute('aria-label', 'Open full-size book photo');
+
+	function openViewer() {
+		var source = hero.getAttribute('src');
+		if (!source) return;
+		image.src = source;
+		image.alt = hero.alt || 'Full-size book photo';
+		viewer.hidden = false;
+		document.body.classList.add('image-viewer-open');
+		closeButton.focus();
+	}
+
+	function closeViewer() {
+		viewer.hidden = true;
+		image.removeAttribute('src');
+		document.body.classList.remove('image-viewer-open');
+		hero.focus();
+	}
+
+	hero.addEventListener('click', openViewer);
+	hero.addEventListener('keydown', function (event) {
+		if (event.key === 'Enter' || event.key === ' ') {
+			event.preventDefault();
+			openViewer();
+		}
+	});
+	closeButton.addEventListener('click', closeViewer);
+	viewer.addEventListener('click', function (event) {
+		if (event.target === viewer) closeViewer();
+	});
+	document.addEventListener('keydown', function (event) {
+		if (event.key === 'Escape' && !viewer.hidden) closeViewer();
+	});
+})();
+</script>
+<script>
+(function () {
+ if (new URLSearchParams(window.location.search).get('mode') !== 'buy') return;
+ var button = document.createElement('button');
+ var header = document.querySelector('#buyerChat .chat-head');
+ var form = document.getElementById('chatForm');
+ var notice = document.createElement('p');
+ var state = { restrictedByMe: false, restrictedYou: false };
+ if (!header || !form) return;
+ button.type = 'button';
+ button.className = 'back-button';
+ button.style.cssText = 'margin-top:10px;color:#b42318';
+ header.appendChild(button);
+ notice.setAttribute('role', 'status');
+ notice.setAttribute('aria-live', 'polite');
+ notice.style.cssText = 'padding:8px 12px;color:#b42318;font-size:11px';
+ notice.hidden = true;
+ form.parentNode.insertBefore(notice, form);
+
+ function render() {
+  var blocked = state.restrictedByMe || state.restrictedYou;
+  var input = document.getElementById('chatInput');
+  var sendButton = form.querySelector('button[type="submit"]');
+  button.textContent = state.restrictedByMe ? 'Unrestrict seller' : 'Restrict seller';
+  button.disabled = state.restrictedYou && !state.restrictedByMe;
+  if (input) input.disabled = blocked;
+  if (sendButton) sendButton.disabled = blocked;
+  notice.hidden = !blocked;
+  notice.textContent = state.restrictedByMe
+   ? 'You restricted this seller. Neither of you can send messages to the other.'
+   : state.restrictedYou ? 'This seller restricted you. You cannot message them.' : '';
+ }
+
+ function refresh() {
+  if (!window.buyerMode || !window.listing || !window.currentUser) return;
+  fetch('/api/conversations/' + encodeURIComponent(window.listing.id) + '/restriction')
+   .then(function (response) {
+    if (!response.ok) throw new Error('Could not load restriction status.');
+    return response.json();
+   })
+   .then(function (result) { state = result; render(); })
+   .catch(function () {});
+ }
+
+ button.addEventListener('click', function () {
+  if (!window.listing || state.restrictedYou && !state.restrictedByMe) return;
+  var shouldRestrict = !state.restrictedByMe;
+  if (shouldRestrict && !window.confirm('Restrict this seller? Neither of you will be able to send messages to the other.')) return;
+  button.disabled = true;
+  fetch('/api/conversations/' + encodeURIComponent(window.listing.id) + '/restriction', {
+   method: shouldRestrict ? 'POST' : 'DELETE',
+   headers: { 'Content-Type': 'application/json' },
+   body: '{}'
+  })
+   .then(function (response) {
+    return response.json().then(function (result) {
+     if (!response.ok) throw new Error(result.error || 'Could not update this restriction.');
+     return result;
+    });
+   })
+   .then(refresh)
+   .catch(function (error) { window.alert(error.message); })
+   .finally(render);
+ });
+
+ refresh();
+ window.setInterval(refresh, 5000);
+})();
+</script>
+</body>
+</html>

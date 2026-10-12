@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="/settings.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy Books - CampusBookHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --navy:#122044; --teal:#079c9b; --teal-dark:#057574; --line:#e6edf2; --muted:#60708d; }
+        * { box-sizing:border-box; margin:0; padding:0; font-family:'Poppins',sans-serif; }
+        body { min-height:100vh; color:var(--navy); background:#fff; }
+        button, input { font:inherit; }
+        .topbar { height:68px; padding:0 28px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line); }
+        .brand { display:flex; align-items:center; gap:10px; color:var(--navy); font-size:25px; font-weight:800; text-decoration:none; }
+        .brand i, .brand span { color:var(--teal); } .brand i { font-size:32px; }
+        .top-actions { display:flex; align-items:center; gap:22px; } .account { display:flex; align-items:center; gap:11px; font-size:12px; font-weight:700; }
+        .avatar { width:40px; height:40px; display:grid; place-items:center; border-radius:50%; background:#e9f8f7; color:var(--teal); font-size:22px; }
+        .shell { display:flex; min-height:calc(100vh - 68px); } aside { width:250px; padding:18px 15px; flex-shrink:0; border-right:1px solid var(--line); }
+        .nav-list { display:grid; gap:8px; } .nav-item { width:100%; padding:10px 14px; display:flex; align-items:center; gap:16px; border:0; border-radius:8px; background:transparent; color:var(--navy); text-align:left; text-decoration:none; cursor:pointer; font-size:14px; }
+        .nav-item:hover { background:#f1f8f8; } .nav-item i { width:34px; height:34px; display:grid; place-items:center; border-radius:50%; background:#eef8f8; color:var(--teal); font-size:18px; }
+        .nav-item:nth-child(3) i { background:#fff1dc; color:#ff9d13; } .nav-item:nth-child(4) i { background:#eeebff; color:#6e58ed; } .nav-item:nth-child(5) i { background:#e9f8ed; color:#169b35; } .nav-item:nth-child(6) i { background:#fff0f1; color:#fa3131; }
+        .nav-item:nth-child(8) i { background:#f0edff; color:#7259e9; } .nav-item:nth-child(9) i { background:#edf1f5; color:#60708d; }
+        .nav-item.active { background:var(--teal); color:#fff; } .nav-item.active i { background:transparent; color:#fff; } .nav-divider { height:1px; margin:16px 0 9px; background:var(--line); }
+        main { flex:1; min-width:0; padding:20px; } .buy-page { max-width:1180px; margin:0 auto; }
+        .page-heading { margin:2px 0 14px; } .page-heading h1 { font-size:23px; } .page-heading p { margin-top:5px; color:var(--muted); font-size:12px; }
+        .tools { display:grid; grid-template-columns:minmax(220px,1fr) repeat(3,132px) 150px; gap:9px; margin-bottom:21px; }
+        .search, .select, .filter { min-height:40px; border:1px solid #dfe8ee; border-radius:6px; background:#fff; color:var(--navy); font-size:11px; }
+        .search { display:flex; align-items:center; gap:11px; padding:0 13px; color:#77869d; } .search input { width:100%; border:0; outline:0; color:var(--navy); font-size:11px; }
+        .select-control { min-height:40px; padding:0 10px; display:flex; align-items:center; gap:7px; border:1px solid #dfe8ee; border-radius:6px; background:#fff; color:var(--teal); }
+        .select-control i { flex:0 0 auto; font-size:12px; } .select-control select { width:100%; min-width:0; border:0; outline:0; background:#fff; color:var(--navy); cursor:pointer; font-size:11px; font-weight:600; }
+        .range-control { display:none; align-items:center; gap:4px; } .range-control input { width:47px; padding:4px; border:1px solid #dfe8ee; border-radius:4px; outline:0; font-size:10px; } .range-control input:focus { border-color:var(--teal); }
+        .filter { padding:0 14px; display:flex; align-items:center; justify-content:center; gap:8px; border:1px solid #c9e7e8; border-radius:6px; background:#fff; color:var(--teal); cursor:pointer; font-weight:600; }
+        .catalog { display:block; } .filters { width:auto; padding:15px 10px; border:1px solid #edf1f4; border-radius:9px; box-shadow:0 3px 12px rgba(18,32,68,.035); font-size:11px; }
+        .filters h2 { margin-bottom:10px; font-size:11px; } .categories { display:grid; gap:2px; list-style:none; } .categories li { padding:6px 4px; color:#435473; } .categories .chosen { border-radius:6px; background:#f0f9f9; color:var(--teal); font-weight:600; }
+        .group { margin-top:12px; padding-top:12px; border-top:1px solid var(--line); } .group h3 { margin-bottom:8px; font-size:11px; } .check { display:flex; align-items:center; gap:7px; margin:7px 0; color:#435473; } .check input { accent-color:var(--teal); }
+        .price { display:flex; gap:5px; align-items:center; } .price input { width:100%; min-width:0; padding:6px; border:1px solid #dfe8ee; border-radius:5px; font-size:10px; } .apply { width:100%; margin-top:8px; padding:6px; border:0; border-radius:5px; background:var(--teal); color:#fff; cursor:pointer; font-size:10px; font-weight:600; }
+        .book-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; } .book-card { min-width:0; overflow:hidden; border:1px solid #edf1f4; border-radius:8px; background:#fff; box-shadow:0 3px 13px rgba(18,32,68,.045); } .book-card[data-listing-id] { cursor:pointer; transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease; } .book-card[data-listing-id]:hover,.book-card[data-listing-id]:focus-visible { border-color:#b9e2e2; box-shadow:0 6px 18px rgba(18,32,68,.1); transform:translateY(-2px); outline:0; }
+        .book-card.sold { cursor:default; opacity:.78; } .book-card.sold:hover { transform:none; } .sold-label { display:inline-block; margin:5px 0 0; padding:3px 6px; border-radius:4px; background:#fff1f0; color:#bf3f36; font-size:8px; font-weight:700; }
+        .book-top { min-height:148px; padding:17px 10px 11px; display:grid; grid-template-columns:63px minmax(0,1fr); gap:9px; } .cover { width:63px; height:96px; padding:7px 5px; display:flex; align-items:flex-end; border-radius:4px; color:#fff; font-size:8px; line-height:1.25; font-weight:700; box-shadow:3px 4px 5px rgba(18,32,68,.12); }
+        .gold { background:linear-gradient(145deg,#d49320,#16445a); } .green { background:linear-gradient(145deg,#207d73,#124f57); } .blue { background:radial-gradient(circle at 50% 55%,#245d88,#111827 70%); } .black { background:linear-gradient(145deg,#363b49,#111827); } .purple { background:linear-gradient(145deg,#273a5c,#111b32); } .red { background:linear-gradient(145deg,#8b3152,#3f1730); } .light { background:linear-gradient(145deg,#d8e4e4,#4d6266); color:var(--navy); }
+        .book-info { min-width:0; } .book-info h3 { min-height:32px; padding-right:12px; position:relative; font-size:11px; line-height:1.4; } .book-info h3:after { content:'\f004'; position:absolute; right:0; top:0; color:#71819a; font:11px 'Font Awesome 6 Free'; }
+        .author { margin-top:4px; overflow:hidden; color:#52627e; font-size:9px; text-overflow:ellipsis; white-space:nowrap; } .subject { display:inline-block; margin:8px 0 5px; padding:3px 5px; border-radius:4px; background:#e9f8f7; color:var(--teal-dark); font-size:8px; } .condition, .place { color:#52627e; font-size:9px; }
+        .book-bottom { padding:0 10px 10px; } .price-tag { padding-bottom:9px; border-bottom:1px solid #edf1f4; color:var(--teal); font-size:14px; font-weight:700; } .seller { display:flex; align-items:center; gap:6px; margin-top:9px; font-size:9px; } .seller i { color:var(--teal); font-size:14px; } .seller strong, .seller span { display:block; } .seller strong { font-size:9px; } .seller span { color:#52627e; font-size:8px; } .place { margin-top:9px; } .place i { margin-right:4px; } .details-link { width:100%; margin-top:10px; padding:7px; border:1px solid #b9e2e2; border-radius:5px; background:#f4fbfb; color:var(--teal-dark); cursor:pointer; font-size:10px; font-weight:600; }
+        .result-count { margin:17px 0 5px; color:#52627e; font-size:10px; }
+        @media (max-width:980px) { .tools { grid-template-columns:minmax(150px,1fr) repeat(2,minmax(90px,1fr)); } .tools > :nth-child(5) { grid-column:span 2; } .tools .select-control { min-width:0; } .book-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+        @media (max-width:680px) { .topbar { padding:0 16px; } .brand { font-size:20px; } .brand i { font-size:27px; } .account > span:not(.avatar), .account > i { display:none; } .shell { display:block; } aside { width:100%; padding:10px; border:0; overflow-x:auto; } .nav-list { display:flex; min-width:max-content; } .nav-item { width:auto; padding:7px 12px; } .nav-item i { width:30px; height:30px; } .nav-divider { display:none; } main { padding:12px; } .tools { display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; } .tools .search { flex:1 0 240px; } .tools .select-control { flex:0 0 145px; } .tools::-webkit-scrollbar { height:5px; } .tools::-webkit-scrollbar-thumb { border-radius:5px; background:#c9e7e8; } .catalog { display:block; } .filters { display:none; } .book-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; } .book-top { grid-template-columns:56px minmax(0,1fr); padding:12px 8px 8px; } .cover { width:56px; height:86px; } .book-bottom { padding:0 8px 8px; } }
+    </style>
+    <script>(function(){var nativeFetch=window.fetch;window.fetch=function(url,options){options=options||{};var token=sessionStorage.getItem('campusBookHubSession');if(token)options.headers=Object.assign({},options.headers,{Authorization:'Bearer '+token});return nativeFetch(url,options);};})();</script>
+</head>
+<body>
+    <header class="topbar"><a class="brand" href="dashboard.html"><i class="fa-solid fa-book-open"></i>Campus<span>BookHub</span></a><div class="top-actions"><span class="account"><span class="avatar"><i class="fa-regular fa-user"></i></span><span id="accountName">Loading...</span><i class="fa-solid fa-chevron-down"></i></span></div></header>
+    <div class="shell"><aside><nav class="nav-list"><a class="nav-item" href="dashboard.html"><i class="fa-regular fa-user"></i>Profile</a><a class="nav-item active" href="buybooks.html"><i class="fa-solid fa-cart-shopping"></i>Buy Books</a><a class="nav-item" href="mylistings.html"><i class="fa-solid fa-tag"></i>Sell Books</a><a class="nav-item" href="uploadpdf.html"><i class="fa-regular fa-file-lines"></i>Upload PDF / Notes</a><span class="nav-divider"></span><button class="nav-item"><i class="fa-solid fa-gear"></i>Settings</button></nav></aside>
+        <main><section class="buy-page"><div class="page-heading"><h1>Buy Books</h1><p>Find the books you need from other students</p></div><div class="tools"><label class="search"><i class="fa-solid fa-magnifying-glass"></i><input type="search" placeholder="Search by title, author or subject..."></label><label class="select-control"><i class="fa-solid fa-layer-group"></i><select aria-label="Branch"><option value="" selected disabled>Branches</option></select></label><label class="select-control"><i class="fa-solid fa-book-open"></i><select aria-label="Subject"><option value="" selected disabled>Subjects</option></select></label><label class="select-control"><i class="fa-solid fa-sparkles"></i><select aria-label="Condition"><option>Any Condition</option><option>New</option><option>Old</option></select></label><label class="select-control"><i class="fa-solid fa-arrow-down-wide-short"></i><select id="priceMode" aria-label="Price"><option value="" selected disabled>Price</option><option value="low">Low to High</option><option value="high">High to Low</option><option value="range">Min to Max</option></select><span class="range-control" id="rangeControl"><input id="minPrice" type="number" min="0" placeholder="Min" aria-label="Minimum price"><input id="maxPrice" type="number" min="0" placeholder="Max" aria-label="Maximum price"></span></label></div><div class="catalog"><div><div class="book-grid">
+            <article class="book-card"><div class="book-top"><div class="cover gold">ENGINEERING<br>MECHANICS</div><div class="book-info"><h3>Engineering Mechanics</h3><p class="author">R. K. Bansal</p><span class="subject">Engineering</span><p class="condition">Condition: Good</p></div></div><div class="book-bottom"><p class="price-tag">₹350</p><div class="seller"><i class="fa-regular fa-user"></i><div><strong>Rahul Verma</strong><span>2nd Year CSE</span></div></div><p class="place"><i class="fa-solid fa-location-dot"></i>Mumbai</p></div></article>
+            <article class="book-card"><div class="book-top"><div class="cover green">DISCRETE<br>MATHEMATICS</div><div class="book-info"><h3>Discrete Mathematics</h3><p class="author">S. K. Das</p><span class="subject" style="background:#fff4df;color:#b96e00">Mathematics</span><p class="condition">Condition: Like New</p></div></div><div class="book-bottom"><p class="price-tag">₹280</p><div class="seller"><i class="fa-regular fa-user"></i><div><strong>Ishita Singh</strong><span>2nd Year IT</span></div></div><p class="place"><i class="fa-solid fa-location-dot"></i>Mumbai</p></div></article>
+            <article class="book-card"><div class="book-top"><div class="cover blue">COMPUTER<br>NETWORKS</div><div class="book-info"><h3>Computer Networks</h3><p class="author">Tanenbaum</p><span class="subject" style="background:#f0edff;color:#6e58ed">Computer Science</span><p class="condition">Condition: Good</p></div></div><div class="book-bottom"><p class="price-tag">₹300</p><div class="seller"><i class="fa-regular fa-user"></i><div><strong>Aman Gupta</strong><span>3rd Year CSE</span></div></div><p class="place"><i class="fa-solid fa-location-dot"></i>Mumbai</p></div></article>
+            <article class="book-card"><div class="book-top"><div class="cover black">DATA<br>STRUCTURES</div><div class="book-info"><h3>Data Structures Using C</h3><p class="author">Yashavant Kanetkar</p><span class="subject" style="background:#f0edff;color:#6e58ed">Computer Science</span><p class="condition">Condition: Average</p></div></div><div class="book-bottom"><p class="price-tag">₹200</p><div class="seller"><i class="fa-regular fa-user"></i><div><strong>Neha Patel</strong><span>2nd Year CSE</span></div></div><p class="place"><i class="fa-solid fa-location-dot"></i>Mumbai</p></div></article>
+            <article class="book-card"><div class="book-top"><div class="cover purple">DIGITAL LOGIC<br>DESIGN</div><div class="book-info"><h3>Digital Logic Design</h3><p class="author">M. Morris Mano</p><span class="subject" style="background:#fff4df;color:#b96e00">Electronics</span><p class="condition">Condition: Good</p></div></div><div class="book-bottom"><p class="price-tag">₹300</p><div class="seller"><i class="fa-regular fa-user"></i><div><strong>Karan Joshi</strong><span>3rd Year ECE</span></div></div><p class="place"><i class="fa-solid fa-location-dot"></i>Mumbai</p></div></article>
+            <article class="book-card"><div class="book-top"><div class="cover blue">OPERATING<br>SYSTEM</div><div class="book-info"><h3>Operating System Concepts</h3><p class="author">Abraham Silberschatz</p><span class="subject" style="background:#f0edff;color:#6e58ed">Computer Science</span><p class="condition">Condition: Good</p></div></div><div class="book-bottom"><p class="price-tag">₹320</p><div class="seller"><i class="fa-regular fa-user"></i><div><strong>Sneha Reddy</strong><span>3rd Year CSE</span></div></div><p class="place"><i class="fa-solid fa-location-dot"></i>Mumbai</p></div></article>
+            <article class="book-card"><div class="book-top"><div class="cover red">DATABASE SYSTEM<br>CONCEPTS</div><div class="book-info"><h3>Database System Concepts</h3><p class="author">Korth &amp; Silberschatz</p><span class="subject" style="background:#f0edff;color:#6e58ed">Computer Science</span><p class="condition">Condition: Average</p></div></div><div class="book-bottom"><p class="price-tag">₹250</p><div class="seller"><i class="fa-regular fa-user"></i><div><strong>Vivek Sharma</strong><span>2nd Year IT</span></div></div><p class="place"><i class="fa-solid fa-location-dot"></i>Mumbai</p></div></article>
+            <article class="book-card"><div class="book-top"><div class="cover light">STRENGTH OF<br>MATERIALS</div><div class="book-info"><h3>Strength of Materials</h3><p class="author">R. K. Bansal</p><span class="subject">Engineering</span><p class="condition">Condition: Good</p></div></div><div class="book-bottom"><p class="price-tag">₹280</p><div class="seller"><i class="fa-regular fa-user"></i><div><strong>Pooja Nair</strong><span>3rd Year Civil</span></div></div><p class="place"><i class="fa-solid fa-location-dot"></i>Mumbai</p></div></article>
+            <article class="book-card"><div class="book-top"><div class="cover gold">THERMODYNAMICS</div><div class="book-info"><h3>Engineering Thermodynamics</h3><p class="author">P. K. Nag</p><span class="subject">Engineering</span><p class="condition">Condition: Like New</p></div></div><div class="book-bottom"><p class="price-tag">₹410</p><div class="seller"><i class="fa-regular fa-user"></i><div><strong>Arjun Mehta</strong><span>2nd Year Mech</span></div></div><p class="place"><i class="fa-solid fa-location-dot"></i>Mumbai</p></div></article>
+            <article class="book-card"><div class="book-top"><div class="cover green">LINEAR<br>ALGEBRA</div><div class="book-info"><h3>Higher Engineering Mathematics</h3><p class="author">B. S. Grewal</p><span class="subject" style="background:#fff4df;color:#b96e00">Mathematics</span><p class="condition">Condition: Good</p></div></div><div class="book-bottom"><p class="price-tag">₹260</p><div class="seller"><i class="fa-regular fa-user"></i><div><strong>Riya Shah</strong><span>1st Year CSE</span></div></div><p class="place"><i class="fa-solid fa-location-dot"></i>Mumbai</p></div></article>
+        </div><p class="result-count">Showing 1-10 of 24 results</p></div></div></section></main></div>
+    <script>
+        var marketplaceListings = [];
+        var grid = document.querySelector('.book-grid');
+        var resultCount = document.querySelector('.result-count');
+        grid.replaceChildren();
+        resultCount.textContent = 'Loading books...';
+        var emptyMessage = document.createElement('p');
+        emptyMessage.style.cssText = 'grid-column:1/-1;color:#60708d;font-size:12px';
+        emptyMessage.hidden = true;
+        grid.after(emptyMessage);
+        var searchInput = document.querySelector('.tools input[type="search"]');
+        var branchSelect = document.querySelector('select[aria-label="Branch"]');
+        var subjectSelect = document.querySelector('select[aria-label="Subject"]');
+        var conditionSelect = document.querySelector('select[aria-label="Condition"]');
+        var marketplaceLoaded = false;
+        var marketplaceRefreshInProgress = false;
+        var filterOptionsRefreshInProgress = false;
+        fetch('/api/me').then(async function (response) { if (!response.ok) { window.location.href = 'login.html'; return false; } const user = await response.json(); document.getElementById('accountName').textContent = user.fullName; return true; }).then(function (authenticated) {
+            if (!authenticated) return;
+            loadFilterOptions();
+            window.setInterval(loadFilterOptions, 5000);
+            return loadMarketplace().then(function () {
+                window.setInterval(loadMarketplace, 5000);
+            });
+        }).catch(function () { grid.innerHTML = ''; emptyMessage.textContent = 'Could not load books for sale.'; emptyMessage.hidden = false; resultCount.textContent = 'Could not load results'; });
+        function loadMarketplace() {
+            if (marketplaceRefreshInProgress) return Promise.resolve();
+            marketplaceRefreshInProgress = true;
+            return fetch('/api/marketplace').then(function (response) {
+                if (!response.ok) throw new Error('Could not refresh available books.');
+                return response.json();
+            }).then(function (result) {
+                var listings = result.listings || [];
+                var nextIds = listings.map(function (listing) { return JSON.stringify([listing.id, listing.status || 'Active', listing.branch || '', listing.subject || '']); }).sort().join('|');
+                var currentIds = marketplaceListings.map(function (listing) { return JSON.stringify([listing.id, listing.status || 'Active', listing.branch || '', listing.subject || '']); }).sort().join('|');
+                if (!marketplaceLoaded || nextIds !== currentIds) renderMarketplace(listings);
+                marketplaceLoaded = true;
+                resultCount.textContent = 'Showing ' + grid.querySelectorAll('.book-card:not([hidden])').length + ' of ' + marketplaceListings.length + ' results';
+            }).catch(function (error) {
+                if (!marketplaceLoaded) throw error;
+                resultCount.textContent = 'Could not refresh available books';
+            }).finally(function () {
+                marketplaceRefreshInProgress = false;
+            });
+        }
+        function updateFilterOptions(select, values, placeholderText) {
+            var currentValues = Array.from(select.options).slice(1).map(function (option) { return option.value; });
+            if (values.length === currentValues.length && values.every(function (value, index) { return value === currentValues[index]; })) return false;
+            var selectedValue = select.value;
+            select.replaceChildren();
+            var placeholder = document.createElement('option');
+            placeholder.value = '';
+            placeholder.textContent = placeholderText;
+            placeholder.disabled = true;
+            placeholder.selected = !values.includes(selectedValue);
+            select.appendChild(placeholder);
+            values.forEach(function (value) {
+                var option = document.createElement('option');
+                option.value = value;
+                option.textContent = value;
+                select.appendChild(option);
+            });
+            select.value = values.includes(selectedValue) ? selectedValue : '';
+            return select.value !== selectedValue;
+        }
+        function loadFilterOptions() {
+            if (filterOptionsRefreshInProgress) return Promise.resolve();
+            filterOptionsRefreshInProgress = true;
+            return fetch('/api/marketplace/branches', { cache: 'no-store' }).then(function (response) {
+                if (!response.ok) throw new Error('Could not load book filter options.');
+                return response.json();
+            }).then(function (result) {
+                var branches = Array.isArray(result.branches) ? result.branches : [];
+                var subjects = Array.isArray(result.subjects) ? result.subjects : Array.from(new Set(marketplaceListings.map(function (listing) { return typeof listing.subject === 'string' ? listing.subject.trim() : ''; }).filter(Boolean))).sort(function (first, second) { return first.localeCompare(second); });
+                var branchChanged = updateFilterOptions(branchSelect, branches, 'Branches');
+                var subjectChanged = updateFilterOptions(subjectSelect, subjects, 'Subjects');
+                if (branchChanged || subjectChanged) applyMarketplaceFilters();
+            }).catch(function (error) {
+                console.error('Could not refresh book filter options:', error);
+            }).finally(function () {
+                filterOptionsRefreshInProgress = false;
+            });
+        }
+        function renderMarketplace(listings) {
+            marketplaceListings = listings;
+            grid.innerHTML = '';
+            listings.forEach(function (listing) {
+                var isSold = listing.status === 'Sold';
+                var card = document.createElement('article'); card.className = 'book-card' + (isSold ? ' sold' : '');
+                var top = document.createElement('div'); top.className = 'book-top';
+                var cover;
+                if (listing.photos && listing.photos[0]) { cover = document.createElement('img'); cover.src = listing.photos[0]; cover.alt = listing.title; }
+                else { cover = document.createElement('div'); cover.className = 'cover light'; cover.textContent = 'BOOK'; }
+                cover.classList.add('cover');
+                var info = document.createElement('div'); info.className = 'book-info';
+                var title = document.createElement('h3'); title.textContent = listing.title;
+                if (isSold) { var soldLabel = document.createElement('span'); soldLabel.className = 'sold-label'; soldLabel.textContent = 'Sold'; info.append(title, soldLabel); }
+                var author = document.createElement('p'); author.className = 'author'; author.textContent = listing.author;
+                var subject = document.createElement('span'); subject.className = 'subject'; subject.textContent = listing.subject || ''; subject.style.display = listing.subject ? '' : 'none';
+                var condition = document.createElement('p'); condition.className = 'condition'; condition.textContent = 'Condition: ' + listing.condition;
+                if (isSold) info.append(author, subject, condition); else info.append(title, author, subject, condition); top.append(cover, info);
+                var bottom = document.createElement('div'); bottom.className = 'book-bottom';
+                var price = document.createElement('p'); price.className = 'price-tag'; price.textContent = '₹' + listing.price;
+                var seller = document.createElement('div'); seller.className = 'seller'; seller.innerHTML = '<i class="fa-regular fa-user"></i><div><strong></strong><span>Student listing</span></div>'; seller.querySelector('strong').textContent = listing.sellerName || 'Campus seller';
+                var place = document.createElement('p'); place.className = 'place'; place.innerHTML = '<i class="fa-solid fa-location-dot"></i>Campus';
+                var details = document.createElement('button'); details.className = 'details-link'; details.type = 'button'; details.textContent = isSold ? 'Sold' : 'View Details'; details.disabled = isSold;
+                bottom.append(price, seller, place, details); card.append(top, bottom); card.dataset.listingId = listing.id; card.tabIndex = 0;
+                if (isSold) card.tabIndex = -1;
+                card.addEventListener('click', function (event) { if (event.target.closest('button')) event.preventDefault(); if (isSold) return; window.location.href = 'bookdetails.html?id=' + encodeURIComponent(listing.id) + '&mode=buy'; });
+                card.addEventListener('keydown', function (event) { if (!isSold && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); window.location.href = 'bookdetails.html?id=' + encodeURIComponent(listing.id) + '&mode=buy'; } });
+                card.dataset.title = listing.title || '';
+                card.dataset.author = listing.author || '';
+                card.dataset.branch = listing.branch || '';
+                card.dataset.subject = listing.subject || '';
+                card.dataset.condition = listing.condition || '';
+                card.dataset.price = String(listing.price || 0);
+                grid.appendChild(card);
+            });
+            var priceOrder = document.getElementById('priceMode').value;
+            if (priceOrder === 'low' || priceOrder === 'high') sortBooks(priceOrder);
+            applyMarketplaceFilters();
+        }
+        function applyMarketplaceFilters() {
+            var query = searchInput.value.trim().toLowerCase();
+            var branch = branchSelect.value.toLowerCase();
+            var subject = subjectSelect.value.toLowerCase();
+            var condition = conditionSelect.value === 'Any Condition' ? '' : conditionSelect.value.toLowerCase();
+            var rangeEnabled = document.getElementById('priceMode').value === 'range';
+            var minimum = rangeEnabled ? Number(document.getElementById('minPrice').value) || 0 : 0;
+            var maximumValue = document.getElementById('maxPrice').value;
+            var maximum = rangeEnabled && maximumValue !== '' ? Number(maximumValue) : Infinity;
+            var visibleCount = 0;
+            grid.querySelectorAll('.book-card').forEach(function (card) {
+                var searchable = [card.dataset.title, card.dataset.author, card.dataset.subject, card.dataset.branch].join(' ').toLowerCase();
+                var price = Number(card.dataset.price);
+                var matches = (!query || searchable.includes(query)) && (!branch || (card.dataset.branch || '').toLowerCase() === branch) && (!subject || (card.dataset.subject || '').toLowerCase() === subject) && (!condition || (card.dataset.condition || '').toLowerCase() === condition) && price >= minimum && price <= maximum;
+                card.hidden = !matches;
+                if (matches) visibleCount += 1;
+            });
+            emptyMessage.textContent = marketplaceListings.length ? 'No books match your filters.' : 'No books from other users are available right now.';
+            emptyMessage.hidden = visibleCount > 0;
+            resultCount.textContent = 'Showing ' + visibleCount + ' of ' + marketplaceListings.length + ' results';
+        }
+        function sortBooks(order) {
+            var cards = Array.from(grid.querySelectorAll('.book-card'));
+            cards.sort(function (firstCard, secondCard) {
+                var firstPrice = Number(firstCard.dataset.price);
+                var secondPrice = Number(secondCard.dataset.price);
+                return order === 'high' ? secondPrice - firstPrice : firstPrice - secondPrice;
+            });
+            cards.forEach(function (card) { grid.appendChild(card); });
+        }
+        document.getElementById('priceMode').addEventListener('change', function (event) {
+            document.getElementById('rangeControl').style.display = event.target.value === 'range' ? 'flex' : 'none';
+            if (event.target.value === 'low' || event.target.value === 'high') sortBooks(event.target.value);
+            applyMarketplaceFilters();
+        });
+        searchInput.addEventListener('input', applyMarketplaceFilters);
+        branchSelect.addEventListener('change', applyMarketplaceFilters);
+        subjectSelect.addEventListener('change', applyMarketplaceFilters);
+        conditionSelect.addEventListener('change', applyMarketplaceFilters);
+        document.getElementById('minPrice').addEventListener('input', applyMarketplaceFilters);
+        document.getElementById('maxPrice').addEventListener('input', applyMarketplaceFilters);
+    </script>
+</body>
+</html>
