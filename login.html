@@ -356,41 +356,54 @@
     </div>
 
     <script>
-        function togglePassword() {
-            const passwordInput = document.getElementById('password');
-            const passwordToggle = document.getElementById('passwordToggle');
-            
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                passwordToggle.classList.remove('fa-eye');
-                passwordToggle.classList.add('fa-eye-slash');
-            } else {
-                passwordInput.type = 'password';
-                passwordToggle.classList.remove('fa-eye-slash');
-                passwordToggle.classList.add('fa-eye');
-            }
+             function togglePassword() {
+    const passwordInput = document.getElementById('password');
+    const passwordToggle = document.getElementById('passwordToggle');
+    
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        passwordToggle.classList.remove('fa-eye');
+        passwordToggle.classList.add('fa-eye-slash');
+    } else {
+        passwordInput.type = 'password';
+        passwordToggle.classList.remove('fa-eye-slash');
+        passwordToggle.classList.add('fa-eye');
+    }
+}
+
+document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    try {
+        // ✅ Get values from input fields
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+
+        // ✅ Send them to backend
+        const response = await fetch('http://localhost:3000/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        });
+
+        const result = await response.json();
+        console.log(result);
+
+        if (!response.ok) {
+            throw new Error(result.error || 'Login failed.');
         }
 
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            fetch('/api/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    email: document.getElementById('email').value.trim(),
-                    password: document.getElementById('password').value
-                })
-            }).then(async function (response) {
-                const responseText = await response.text();
-                let result;
-                try { result = JSON.parse(responseText); } catch (error) { result = { error: responseText || 'Could not log in.' }; }
-                if (!response.ok) throw new Error(result.error);
-                sessionStorage.setItem('campusBookHubSession', result.sessionToken);
-                window.location.href = result.redirect;
-            }).catch(function (error) {
-                alert(error.message || 'Could not log in.');
-            });
-        });
+        // 🔑 Save the session token
+        const token = result.sessionToken;
+        if (!token) throw new Error('No session token returned from server.');
+        localStorage.setItem('campusBookHubSession', token);
+
+        // ✅ Redirect after login
+        window.location.href = result.redirect || '/dashboard.html';
+    } catch (error) {
+        alert(error.message || 'Could not log in.');
+    }
+});
+
     </script>
 
 </body>

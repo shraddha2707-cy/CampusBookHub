@@ -656,7 +656,7 @@
             const nativeFetch = window.fetch;
             window.fetch = function (url, options) {
                 options = options || {};
-                const token = sessionStorage.getItem('campusBookHubSession');
+                const token = localStorage.getItem('campusBookHubSession');
                 if (token) {
                     options.headers = Object.assign({}, options.headers, { Authorization: 'Bearer ' + token });
                 }
@@ -780,7 +780,7 @@
             .then(async function (response) {
                 if (!response.ok) {
                     if (response.status === 401) {
-                        sessionStorage.removeItem('campusBookHubSession');
+                        localStorage.removeItem('campusBookHubSession');
                         window.location.href = '/login.html';
                         return;
                     }

@@ -137,7 +137,7 @@
                 const result = await response.json();
                 if (!response.ok) throw new Error(result.error || 'Could not log out.');
 
-                sessionStorage.removeItem('campusBookHubSession');
+                localStorage.removeItem('campusBookHubSession');
                 dialog.close();
                 window.location.href = '/login.html';
             } catch (error) {

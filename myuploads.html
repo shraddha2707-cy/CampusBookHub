@@ -492,7 +492,7 @@
       .file-name { font-size: 14px; }
     }
   </style>
-  <script>(function(){var nativeFetch=window.fetch;window.fetch=function(url,options){options=options||{};var token=sessionStorage.getItem('campusBookHubSession');if(token)options.headers=Object.assign({},options.headers,{Authorization:'Bearer '+token});return nativeFetch(url,options);};})();</script>
+  <script>(function(){var nativeFetch=window.fetch;window.fetch=function(url,options){options=options||{};var token=localStorage.getItem('campusBookHubSession');if(token)options.headers=Object.assign({},options.headers,{Authorization:'Bearer '+token});return nativeFetch(url,options);};})();</script>
 </head>
 <body>
   <header class="topbar">

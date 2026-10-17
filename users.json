@@ -1,34 +1,10 @@
 [
   {
-    "id": "bf57fe19-e21c-45db-9056-d5ad0a71dedb",
+    "id": "b86c7714-49f1-41b6-af30-7056bc8bc810",
     "fullName": "SHRADDHA SHELKE",
     "email": "shraddha.shelke25121018@gcoeara.ac.in",
-    "salt": "57bdbd344b853394aed55c95c4997030",
-    "passwordHash": "b554b1e3fac9b1ed7e205468c804d73f73c1db0a1a40269358f4069e987bef241870461404c0f79831377aabce2a85425036db753f53e035b2d4ce9387c5b02f",
-    "createdAt": "2026-08-20T18:45:24.703Z"
-  },
-  {
-    "id": "f09c6752-5f37-49d4-880b-510825505ea4",
-    "fullName": "shraddha shelke",
-    "email": "shraddhaa.shelke25121018@gmail.com",
-    "salt": "d262efd4a1b3aca446ee738b375328e7",
-    "passwordHash": "334b0ee59f96e4280a8c3ee951e5e572b09d72eed015682fdb11a6babd071555a0b58e84f153d0548031e5e73c9d2a98cd314a82840257e376278e9b5aed8dff",
-    "createdAt": "2026-08-22T09:09:31.888Z"
-  },
-  {
-    "id": "b15db23b-d845-4e18-81f8-9b1d151920e8",
-    "fullName": "diya",
-    "email": "diya18@gcoeara.ac.in",
-    "salt": "80e8f68104d04960c718aad843607944",
-    "passwordHash": "755957cb88a3f392281b5d1c84be768cdf07c4ead07ac63c2ef2f3748517a0bc360562ca5b7eb618605d560ef465f71c8b837561897027af8dbca38e64487662",
-    "createdAt": "2026-08-22T09:50:30.980Z"
-  },
-  {
-    "id": "5288f2c1-6e1f-465a-a958-1bee5c7304c3",
-    "fullName": "riya deshpande",
-    "email": "riyadeshpande@gmail.com",
-    "salt": "5bbeb2620696c621e5bfa6ad7f5d4cb1",
-    "passwordHash": "aa7fc28f0b74b2610af69622bf838d824e8afaa785ff0af51287a18c3c58c191e826e40b0b8eb527003c518de68bbe36c9bfec9735a7f90256c11daf507f682a",
-    "createdAt": "2026-10-04T06:22:25.287Z"
+    "salt": "d8cbce595b134ef989271833b0aeff7d",
+    "passwordHash": "fa368b828a1db8ad9fff87039edd4b94c8ac53e1f69615397ba30b1ff6655f2b7fb2524b65e70c2c4f24f4f11a5f278fdd4d7cc4cde03d3cafe6c502e24d9b99",
+    "createdAt": "2026-10-13T14:00:44.728Z"
   }
 ]

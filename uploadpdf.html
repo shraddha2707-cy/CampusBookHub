@@ -921,6 +921,13 @@
   </div>
 
   <script>
+    const token = localStorage.getItem('campusBookHubSession');
+
+    if (!token) {
+    alert("You must log in first!");
+    window.location.href = "/login.html";
+    }
+
     function setStatus(message, type) {
       const box = document.getElementById('statusBox');
       box.textContent = message;
@@ -1113,18 +1120,28 @@
         btn.disabled = false;
         btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Upload';
       }
-    });
+    }); 
 
-    fetch('/api/me').then(async function(response) {
+    fetch('/api/me', {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
+    .then(async function(response) {
       if (!response.ok) {
-        window.location.href = 'login.html';
+        console.error('Login check failed:', response.status);
         return;
       }
+
       const user = await response.json();
       document.getElementById('accountName').textContent = user.fullName;
-    }).catch(function() {
-      window.location.href = 'login.html';
+    })
+    .catch(function(error) {
+      console.error('Error checking login:', error);
     });
-  </script>
+
+</script>
+
+  
 </body>
 </html>

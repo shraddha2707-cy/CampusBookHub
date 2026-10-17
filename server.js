@@ -305,7 +305,7 @@ function serveFile(request, response, pathname) {
         response.end('Not found');
         return;
     }
-    const requestedPath = decodedPath === '/' ? '/frontpage.html' : decodedPath;
+    const requestedPath = decodedPath === '/' ? '/index.html' : decodedPath;
     const filePath = path.resolve(ROOT, `.${requestedPath}`);
     const relativePath = path.relative(ROOT, filePath);
     const extension = path.extname(filePath).toLowerCase();
